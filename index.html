@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Money Tracker — Love Your Money Again. AI-Powered Budgeting, Bank-Grade Security.</title>
+<meta name="description" content="AI Money Tracker turns your paycheck into a plan: what comes in, what goes out, and what to fix first. AI-powered finance with privacy and security built in. Free budgeting, secure bank sync with Plus.">
+<style>
+  :root {
+    --bg: #05070d;
+    --bg-2: #0a0f1a;
+    --card: rgba(16, 24, 39, 0.72);
+    --ink: #eef4ff;
+    --dim: #8fa3bd;
+    --neon-cyan: #22d3ee;
+    --neon-green: #34f5a1;
+    --neon-violet: #a78bfa;
+    --neon-pink: #f472b6;
+    --line: rgba(94, 234, 212, 0.14);
+    --max: 1020px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+  /* neon grid backdrop */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -2;
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgba(34, 211, 238, 0.13), transparent 70%),
+      radial-gradient(40% 30% at 85% 25%, rgba(167, 139, 250, 0.10), transparent 70%),
+      radial-gradient(45% 35% at 10% 60%, rgba(52, 245, 161, 0.07), transparent 70%),
+      var(--bg);
+  }
+  body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: -1;
+    background-image:
+      linear-gradient(rgba(94, 234, 212, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(94, 234, 212, 0.045) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(75% 60% at 50% 20%, #000 30%, transparent 100%);
+  }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  header { padding: 84px 0 56px; text-align: center; position: relative; }
+  .badge {
+    display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--neon-cyan);
+    border: 1px solid rgba(34, 211, 238, 0.5); border-radius: 999px; padding: 6px 18px;
+    margin-bottom: 24px; background: rgba(34, 211, 238, 0.06);
+    box-shadow: 0 0 18px rgba(34, 211, 238, 0.25), inset 0 0 12px rgba(34, 211, 238, 0.08);
+  }
+  h1 { font-size: clamp(2.1rem, 5.6vw, 3.6rem); line-height: 1.12; letter-spacing: -0.02em; font-weight: 800; }
+  .grad {
+    background: linear-gradient(92deg, var(--neon-cyan) 0%, var(--neon-green) 45%, var(--neon-violet) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 22px rgba(34, 211, 238, 0.35));
+  }
+  .sub { margin: 22px auto 0; max-width: 640px; font-size: 1.15rem; color: var(--dim); }
+  .cta-row { margin-top: 36px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .cta {
+    display: inline-block; padding: 14px 30px; border-radius: 14px; font-weight: 800;
+    text-decoration: none; font-size: 1rem; letter-spacing: .01em; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .cta.primary {
+    background: linear-gradient(92deg, var(--neon-cyan), var(--neon-green));
+    color: #04121a;
+    box-shadow: 0 0 28px rgba(34, 211, 238, 0.45), 0 0 60px rgba(52, 245, 161, 0.18);
+  }
+  .cta.primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(34, 211, 238, 0.65), 0 0 80px rgba(52, 245, 161, 0.28); }
+  .cta.ghost { border: 1px solid var(--line); color: var(--ink); background: rgba(255,255,255,0.02); }
+  .cta.ghost:hover { border-color: rgba(34,211,238,.5); box-shadow: 0 0 18px rgba(34,211,238,.2); }
+  .note { margin-top: 16px; font-size: .85rem; color: var(--dim); }
+
+  section { padding: 64px 0; position: relative; }
+  section + section { border-top: 1px solid var(--line); }
+  h2 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); letter-spacing: -0.01em; margin-bottom: 10px; font-weight: 800; }
+  .lede { color: var(--dim); max-width: 660px; margin-bottom: 36px; font-size: 1.05rem; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 26px;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  .card:hover {
+    border-color: rgba(34, 211, 238, 0.45);
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.12), inset 0 0 24px rgba(34, 211, 238, 0.03);
+    transform: translateY(-3px);
+  }
+  .card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .card p { font-size: .95rem; color: var(--dim); }
+  .card .ico {
+    font-size: 1.5rem; display: inline-grid; place-items: center; width: 48px; height: 48px;
+    border-radius: 13px; margin-bottom: 14px;
+    background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(167,139,250,.14));
+    border: 1px solid rgba(34,211,238,.3);
+    box-shadow: 0 0 16px rgba(34,211,238,.15);
+  }
+
+  /* screenshots */
+  .shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 26px; }
+  .shot { text-align: center; }
+  .shot .frame {
+    display: inline-block; padding: 9px; border-radius: 34px;
+    background: linear-gradient(160deg, rgba(34,211,238,.55), rgba(167,139,250,.4) 55%, rgba(244,114,182,.35));
+    box-shadow: 0 0 34px rgba(34,211,238,.22), 0 0 90px rgba(167,139,250,.12);
+  }
+  .shot .frame-inner { background: #05070d; border-radius: 27px; padding: 5px; }
+  .shot img {
+    display: block; width: 100%; max-width: 232px; height: auto; border-radius: 22px;
+  }
+  .shot figcaption { margin-top: 14px; font-size: .95rem; font-weight: 700; }
+  .shot .cap-sub { display: block; font-weight: 400; font-size: .82rem; color: var(--dim); margin-top: 2px; }
+
+  /* pricing */
+  .price-card {
+    text-align: center; max-width: 480px; margin: 0 auto; position: relative; overflow: hidden;
+    border-color: rgba(52, 245, 161, 0.35);
+    box-shadow: 0 0 44px rgba(52, 245, 161, 0.12), inset 0 0 40px rgba(52, 245, 161, 0.03);
+  }
+  .price-card::before {
+    content: ""; position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+  }
+  .plus-chip {
+    display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--neon-green); border: 1px solid rgba(52,245,161,.45); border-radius: 999px;
+    padding: 4px 14px; margin-bottom: 12px; background: rgba(52,245,161,.07);
+    box-shadow: 0 0 14px rgba(52,245,161,.25);
+  }
+  .price { font-size: 3rem; font-weight: 800; margin: 6px 0 2px;
+    background: linear-gradient(92deg, var(--neon-green), var(--neon-cyan));
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .price small { font-size: 1rem; font-weight: 600; -webkit-text-fill-color: var(--dim); }
+  .trial { color: var(--neon-green); font-weight: 800; text-shadow: 0 0 14px rgba(52,245,161,.4); }
+  ul.plain { list-style: none; margin: 20px 0; text-align: left; }
+  ul.plain li { padding: 8px 0 8px 30px; position: relative; font-size: .95rem; }
+  ul.plain li::before { content: "✓"; position: absolute; left: 4px; color: var(--neon-green); font-weight: 800;
+    text-shadow: 0 0 10px rgba(52,245,161,.6); }
+  .fine { font-size: .8rem; color: var(--dim); margin-top: 16px; }
+
+  .promise-quote {
+    max-width: 760px; font-size: 1.15rem; color: var(--ink);
+    border-left: 2px solid var(--neon-violet); padding-left: 22px;
+    box-shadow: inset 3px 0 18px -8px rgba(167,139,250,.5);
+  }
+
+  footer { border-top: 1px solid var(--line); padding: 44px 0 72px; font-size: .85rem; color: var(--dim); }
+  footer a { color: var(--dim); }
+  a { color: var(--neon-cyan); }
+
+  @media (max-width: 640px) {
+    header { padding-top: 60px; }
+    .shots { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <span class="badge">AI-Powered Personal Finance</span>
+  <h1>Love your money again.<br><span class="grad">Know it. Grow it. Protect it.</span></h1>
+  <p class="sub">
+    AI Money Tracker turns your paycheck into a plan and gives you a straight
+    answer: what comes in, what goes out, and what to fix first. Real financial
+    clarity — with privacy and security engineered in from the first line of code.
+  </p>
+  <div class="cta-row">
+    <a class="cta primary" href="#pricing">Coming soon to the App&nbsp;Store</a>
+    <a class="cta ghost" href="https://github.com/terminator1111111/Ai-Money-Tracker/blob/main/PRIVACY.md">Read our Privacy Promise</a>
+  </div>
+  <p class="note">Free to download · Built for military families, students, and every household in between</p>
+</header>
+
+<section id="screens">
+  <div class="wrap">
+    <h2>See your <span class="grad">whole financial life</span> at a glance</h2>
+    <p class="lede">Four screens. Zero confusion. This is what money clarity looks like.</p>
+    <div class="shots">
+      <figure class="shot">
+        <span class="frame"><span class="frame-inner">
+          <img src="screenshots/plan.png" alt="The spending plan screen: income, expenses, debt and savings in one plan" loading="lazy">
+        </span></span>
+        <figcaption>Your Plan<span class="cap-sub">Income, expenses, debt &amp; savings — one truth</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <span class="frame"><span class="frame-inner">
+          <img src="screenshots/summary.png" alt="The summary screen: instant financial health checks and what to fix first" loading="lazy">
+        </span></span>
+        <figcaption>Instant Health Checks<span class="cap-sub">Debt-to-income, runway &amp; what to fix first</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <span class="frame"><span class="frame-inner">
+          <img src="screenshots/bank.png" alt="The bank screen: securely connected accounts and automatically imported transactions" loading="lazy">
+        </span></span>
+        <figcaption>Banks, Connected<span class="cap-sub">Transactions import &amp; sort themselves</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <span class="frame"><span class="frame-inner">
+          <img src="screenshots/about.png" alt="The about screen: privacy controls including full in-app account deletion" loading="lazy">
+        </span></span>
+        <figcaption>You're In Control<span class="cap-sub">Privacy-first, delete everything anytime</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="clarity">
+  <div class="wrap">
+    <h2>Money clarity, not money stress</h2>
+    <p class="lede">Most budgeting apps show you charts. AI Money Tracker tells you the truth — instantly, in plain language.</p>
+    <div class="grid">
+      <div class="card"><span class="ico">🧭</span><h3>What to fix first</h3>
+        <p>Automatic health checks rank what matters: debt-to-income, months of savings runway, and the one number holding your budget back.</p></div>
+      <div class="card"><span class="ico">💵</span><h3>Your whole financial life</h3>
+        <p>Income, expenses, debt, and savings in one spending plan — built on a battle-tested budgeting model, verified by over 20,000 automated calculations.</p></div>
+      <div class="card"><span class="ico">🤖</span><h3>AI-powered insight</h3>
+        <p>Smart transaction sorting drops your real spending straight into your plan — and AI-powered insights are coming soon to guide your next money move.</p></div>
+      <div class="card"><span class="ico">🎖️</span><h3>Built for real households</h3>
+        <p>Military pay, college budgets, single-income families — the plan adapts to the life you actually live, not an idealized one.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="security">
+  <div class="wrap">
+    <h2>Bank-grade security. <span class="grad">Radical privacy.</span></h2>
+    <p class="lede">Your money deserves safety without surveillance. We designed AI Money Tracker so that trusting us requires trusting almost nothing.</p>
+    <div class="grid">
+      <div class="card"><span class="ico">🔒</span><h3>We never see your bank login</h3>
+        <p>Bank connections run through Plaid, the same trusted network behind leading finance apps. Your credentials go to your bank — never to us.</p></div>
+      <div class="card"><span class="ico">🛡️</span><h3>Two-factor, always</h3>
+        <p>Sign in with Apple plus mandatory two-factor authentication protect your account. No shortcuts, no route around it — not even for us.</p></div>
+      <div class="card"><span class="ico">📱</span><h3>Your budget stays on your phone</h3>
+        <p>Your spending plan is stored on your device. It is never uploaded, never mined, never sold. No ads. No trackers. No analytics SDKs.</p></div>
+      <div class="card"><span class="ico">🗑️</span><h3>Delete means delete</h3>
+        <p>One tap in the app erases your account and every server-side record, and revokes bank access immediately. Your data, your call — always.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Simple, honest pricing</h2>
+    <p class="lede">The budget that tells you the truth is free, forever. Connect your banks when you're ready.</p>
+    <div class="card price-card">
+      <span class="plus-chip">AI Money Tracker Plus</span>
+      <div class="price">$9.99<small>/month</small></div>
+      <p class="trial">Start with a 7-day free trial</p>
+      <ul class="plain">
+        <li>Secure bank sync through Plaid</li>
+        <li>Automatic transaction import, sorted into your plan</li>
+        <li>Balances and credit cards — including APRs — straight from your bank</li>
+        <li>AI-powered insights (coming soon)</li>
+      </ul>
+      <p class="fine">
+        Plus is an auto-renewable monthly subscription billed through your Apple
+        Account. Cancel anytime in Settings. The full budgeting experience stays
+        free without it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="promise">
+  <div class="wrap">
+    <h2>Our promise</h2>
+    <p class="promise-quote">
+      Money is stressful enough. You deserve a finance app that is on your side:
+      one that guards your security like a vault, respects your privacy like a
+      friend, and tells you the truth like family. That's the app we built —
+      and the one we'll keep building.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>AI Money Tracker</strong> · <a href="https://github.com/terminator1111111/Ai-Money-Tracker/blob/main/PRIVACY.md">Privacy Policy</a> · Support: <a href="mailto:support@ai-money-tracker.com">support@ai-money-tracker.com</a></p>
+    <p style="margin-top:8px">© 2026 Michael Ramirez. All rights reserved. Apple, the Apple logo, and Sign in with Apple are trademarks of Apple Inc. Plaid is a trademark of Plaid Inc.</p>
+  </div>
+</footer>
+
+</body>
+</html>
