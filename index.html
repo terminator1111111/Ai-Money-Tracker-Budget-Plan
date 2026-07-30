@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Money Tracker — Love Your Money Again. AI-Powered Budgeting, Bank-Grade Security.</title>
 <meta name="description" content="AI Money Tracker turns your paycheck into a plan: what comes in, what goes out, and what to fix first. AI-powered finance with privacy and security built in. Free budgeting, secure bank sync with Plus.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/logo-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="AI Money Tracker — Love Your Money Again">
+<meta property="og:description" content="Your paycheck, turned into a plan: what comes in, what goes out, and what to fix first. Privacy and security built in.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://terminator1111111.github.io/Ai-Money-Tracker-Budget-Plan/assets/logo-1024.png">
+<meta name="twitter:card" content="summary">
 <style>
   :root {
     --bg: #05070d;
@@ -49,7 +57,35 @@
   }
   .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 
-  header { padding: 84px 0 56px; text-align: center; position: relative; }
+  /* sticky nav */
+  nav.topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(5, 7, 13, 0.78);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: var(--max); margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-weight: 800; letter-spacing: -0.01em; }
+  .brand img { width: 34px; height: 34px; display: block; }
+  .topbar-links { margin-left: auto; display: flex; align-items: center; gap: 22px; }
+  .topbar-links a { color: var(--dim); text-decoration: none; font-size: .9rem; font-weight: 600; }
+  .topbar-links a:hover { color: var(--ink); }
+  .topbar-links a.nav-cta {
+    color: #04121a; font-weight: 800; padding: 8px 18px; border-radius: 10px;
+    background: linear-gradient(92deg, var(--neon-cyan), var(--neon-green));
+    box-shadow: 0 0 18px rgba(34, 211, 238, 0.3);
+  }
+  @media (max-width: 640px) { .topbar-links a:not(.nav-cta) { display: none; } }
+
+  .hero-logo {
+    width: 76px; height: 76px; margin: 0 auto 22px; display: block;
+    filter: drop-shadow(0 0 24px rgba(52, 245, 161, 0.35));
+  }
+
+  header { padding: 56px 0; text-align: center; position: relative; }
   .badge {
     display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .18em;
     text-transform: uppercase; color: var(--neon-cyan);
@@ -79,7 +115,7 @@
   .cta.ghost:hover { border-color: rgba(34,211,238,.5); box-shadow: 0 0 18px rgba(34,211,238,.2); }
   .note { margin-top: 16px; font-size: .85rem; color: var(--dim); }
 
-  section { padding: 64px 0; position: relative; }
+  section { padding: 64px 0; position: relative; scroll-margin-top: 70px; }
   section + section { border-top: 1px solid var(--line); }
   h2 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); letter-spacing: -0.01em; margin-bottom: 10px; font-weight: 800; }
   .lede { color: var(--dim); max-width: 660px; margin-bottom: 36px; font-size: 1.05rem; }
@@ -119,6 +155,29 @@
   }
   .shot figcaption { margin-top: 14px; font-size: .95rem; font-weight: 700; }
   .shot .cap-sub { display: block; font-weight: 400; font-size: .82rem; color: var(--dim); margin-top: 2px; }
+
+  /* video */
+  .video-shell {
+    position: relative; max-width: 860px; margin: 0 auto;
+    border-radius: 22px; padding: 9px;
+    background: linear-gradient(160deg, rgba(34,211,238,.55), rgba(52,245,161,.4) 55%, rgba(167,139,250,.35));
+    box-shadow: 0 0 44px rgba(34,211,238,.22), 0 0 110px rgba(52,245,161,.12);
+  }
+  .video-frame {
+    position: relative; border-radius: 15px; overflow: hidden; background: #05070d;
+    aspect-ratio: 16 / 9;
+  }
+  .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .sound-btn {
+    position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 3;
+    display: none; align-items: center; gap: 8px; cursor: pointer;
+    font: inherit; font-size: .9rem; font-weight: 800; color: #04121a;
+    padding: 10px 22px; border: 0; border-radius: 999px;
+    background: linear-gradient(92deg, var(--neon-cyan), var(--neon-green));
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.5);
+  }
+  .sound-btn.show { display: inline-flex; }
+  .video-cta { text-align: center; margin-top: 30px; }
 
   /* pricing */
   .price-card {
@@ -165,7 +224,24 @@
 </head>
 <body>
 
-<header class="wrap">
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <img src="assets/logo-64.png" alt="AI Money Tracker logo" width="34" height="34">
+      <span>AI&nbsp;Money&nbsp;Tracker</span>
+    </a>
+    <div class="topbar-links">
+      <a href="#screens">Features</a>
+      <a href="#video">Watch</a>
+      <a href="#security">Security</a>
+      <a href="#pricing">Pricing</a>
+      <a class="nav-cta" href="#pricing">Get the App</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap" id="top">
+  <img class="hero-logo" src="assets/logo-192.png" alt="" width="76" height="76">
   <span class="badge">AI-Powered Personal Finance</span>
   <h1>Love your money again.<br><span class="grad">Know it. Grow it. Protect it.</span></h1>
   <p class="sub">
@@ -174,6 +250,11 @@
     clarity — with privacy and security engineered in from the first line of code.
   </p>
   <div class="cta-row">
+    <!-- LAUNCH DAY: delete the "Coming soon" line below and uncomment this one.
+         Do this only after Apple's "now available on the App Store" email — the
+         link 404s until the app is actually live.
+    <a class="cta primary" href="https://apps.apple.com/us/app/id6796097357">Download on the App&nbsp;Store</a>
+    -->
     <a class="cta primary" href="#pricing">Coming soon to the App&nbsp;Store</a>
     <a class="cta ghost" href="https://github.com/terminator1111111/Ai-Money-Tracker/blob/main/PRIVACY.md">Read our Privacy Promise</a>
   </div>
@@ -227,6 +308,21 @@
       <div class="card"><span class="ico">🎖️</span><h3>Built for real households</h3>
         <p>Military pay, college budgets, single-income families — the plan adapts to the life you actually live, not an idealized one.</p></div>
     </div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <h2>See it work in <span class="grad">under a minute</span></h2>
+    <p class="lede">You just saw what AI Money Tracker does. Now watch it happen — real app, real plan, no jargon. The video starts on its own; tap the button for sound.</p>
+    <div class="video-shell">
+      <div class="video-frame" id="video-frame" data-video-id="DjvEQTVSeeU">
+        <button class="sound-btn" id="sound-btn" type="button">🔊 Tap for sound</button>
+      </div>
+    </div>
+    <p class="video-cta">
+      <a class="cta primary" href="#pricing">I'm ready — show me the plan</a>
+    </p>
   </div>
 </section>
 
@@ -284,10 +380,65 @@
 
 <footer>
   <div class="wrap">
-    <p><strong>AI Money Tracker</strong> · <a href="https://github.com/terminator1111111/Ai-Money-Tracker/blob/main/PRIVACY.md">Privacy Policy</a> · Support: <a href="mailto:support@ai-money-tracker.com">support@ai-money-tracker.com</a></p>
+    <p style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <img src="assets/logo-64.png" alt="" width="26" height="26" style="display:block">
+      <strong>AI Money Tracker</strong> · <a href="https://github.com/terminator1111111/Ai-Money-Tracker/blob/main/PRIVACY.md">Privacy Policy</a> · Support: <a href="mailto:support@ai-money-tracker.com">support@ai-money-tracker.com</a></p>
     <p style="margin-top:8px">© 2026 Michael Ramirez. All rights reserved. Apple, the Apple logo, and Sign in with Apple are trademarks of Apple Inc. Plaid is a trademark of Plaid Inc.</p>
   </div>
 </footer>
+
+<script>
+(function () {
+  var frame = document.getElementById('video-frame');
+  var soundBtn = document.getElementById('sound-btn');
+  if (!frame) return;
+
+  var player = null;
+  var unmuted = false;
+
+  function send(cmd, args) {
+    if (!player || !player.contentWindow) return;
+    player.contentWindow.postMessage(JSON.stringify({ event: 'command', func: cmd, args: args || [] }), '*');
+  }
+
+  function buildPlayer() {
+    if (player) return;
+    player = document.createElement('iframe');
+    player.src = 'https://www.youtube-nocookie.com/embed/' + frame.dataset.videoId +
+      '?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1' +
+      '&origin=' + encodeURIComponent(location.origin);
+    player.title = 'AI Money Tracker — see it work in under a minute';
+    player.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    player.setAttribute('allowfullscreen', '');
+    frame.insertBefore(player, soundBtn);
+    soundBtn.classList.add('show');
+  }
+
+  soundBtn.addEventListener('click', function () {
+    unmuted = true;
+    send('unMute');
+    send('setVolume', [100]);
+    send('seekTo', [0, true]);
+    send('playVideo');
+    soundBtn.classList.remove('show');
+  });
+
+  if (!('IntersectionObserver' in window)) { buildPlayer(); return; }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        buildPlayer();
+        send('playVideo');
+      } else if (player) {
+        // pause politely when scrolled away so audio never chases the reader
+        send('pauseVideo');
+      }
+    });
+  }, { threshold: 0.45 });
+  observer.observe(frame);
+})();
+</script>
 
 </body>
 </html>
