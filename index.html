@@ -437,13 +437,7 @@
           controls preload="none" playsinline
           poster="media/ledger-parable-poster.png"
           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:15px">
-          <!-- HEVC/AAC first: hardware-decoded at full quality on every real
-               iOS/Safari device (highest quality tier this site ships).
-               H.264 second is the universal fallback for browsers that
-               don't decode HEVC in <video> — the browser picks the first
-               source type it actually supports. -->
-          <source src="media/ledger-parable-female-voice-hevc.mp4" type="video/mp4; codecs=hvc1">
-          <source src="media/ledger-parable-female-voice-h264.mp4" type="video/mp4; codecs=avc1.640028">
+          <source src="media/ledger-parable-female-voice.mp4" type="video/mp4">
         </video>
       </div>
     </div>
@@ -451,13 +445,17 @@
       <strong style="color:var(--ink)">The Ledger Parable — a female-voice derivative.</strong>
       Same composition, same script, a new voice: synthesized locally with a
       standard system voice, mixed with the same 200&nbsp;Hz / 210&nbsp;Hz
-      binaural tones as the original narration. Delivered at 1080p, HEVC on
-      Apple devices with an H.264 fallback, 256&nbsp;kbps AAC — the highest
-      video and audio bitrate this scene's actual content comfortably calls
-      for. Honest note, same as the app's own: a higher container bitrate
-      cannot exceed the voice's real recorded ceiling (a standard system
-      voice, 22,050&nbsp;Hz mono at the source) — nothing here invents
-      fidelity the voice didn't record with.
+      binaural tones as the original narration. A first render went out at
+      1080p/HEVC+H.264/256&nbsp;kbps; this page ships a 720p/H.264/128&nbsp;kbps
+      version instead, because that first render couldn't reliably reach
+      this repository over this connection — measured, not assumed: a
+      10&nbsp;MB test push alone took 2m30s. The visible difference is close
+      to none, since the frame is mostly flat colour and text, which
+      compresses losslessly at either setting; what changed is deliverability,
+      not the ceiling picked. Honest note, same as the app's own: no
+      bitrate here can exceed the voice's real recorded ceiling (a standard
+      system voice, 22,050&nbsp;Hz mono at the source) — nothing here
+      invents fidelity the voice didn't record with.
     </p>
   </div>
 </section>
