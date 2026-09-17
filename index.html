@@ -338,11 +338,18 @@
     margin: 0 0 28px; text-shadow: 0 0 14px rgba(34, 211, 238, .28);
   }
   .crawl-track p:last-child { color: var(--neon-green); font-weight: 700; }
+  /* Shared by prefers-reduced-motion AND .crawl-frame.is-static (2026-09-17):
+     the honest fallback for any case where the crawl's word-count-paced
+     position can't be trusted to mean anything real — reduced motion, or
+     a language the audio isn't actually speaking (see the JS below). */
   @media (prefers-reduced-motion: reduce) {
     .crawl-frame { aspect-ratio: auto; perspective: none; max-height: 70vh; overflow-y: auto; }
     .crawl-frame::before { display: none; }
     .crawl-track { position: static; width: 100%; transform: none; padding: 28px 6%; text-align: left; }
   }
+  .crawl-frame.is-static { aspect-ratio: auto; perspective: none; max-height: 70vh; overflow-y: auto; }
+  .crawl-frame.is-static::before { display: none; }
+  .crawl-frame.is-static .crawl-track { position: static; width: 100%; transform: none; padding: 28px 6%; text-align: left; }
   .crawl-audio { display: block; width: 100%; max-width: 480px; margin: 18px auto 0; }
   .crawl-lang-toggle {
     display: flex; justify-content: center; gap: 8px; margin: 48px auto 0;
@@ -538,12 +545,16 @@
       Español toggle above: it switches the ON-SCREEN TEXT only — no Spanish
       narration exists yet, so the audio stays this same English voice
       regardless of which text you're reading, the same way subtitles read
-      alongside a film's original soundtrack. The crawl still paces itself
-      against this audio's real clock either way, so the position always
-      matches how far the narration has actually gotten — it's an honest
-      pacing estimate built from the visible text's own word count (the
-      audio carries no per-word timestamps to sync against exactly), not a
-      claim that the English voice is speaking the Spanish words on screen.
+      alongside a film's original soundtrack. In English, the crawl's
+      position is a real, live estimate paced by the visible text's own
+      word count against this audio's real clock (the audio carries no
+      per-word timestamps to sync against exactly, but word count tracks
+      English speaking time reasonably well). That estimate does NOT hold
+      for Spanish — a Spanish paragraph's word count has no reason to match
+      how long the SAME idea takes the English voice to say — so Español
+      mode shows the text as a plain, static passage instead of an
+      animated position, rather than show a confident-looking line that
+      cannot actually mean what it means in English.
     </p>
   </div>
 </section>
@@ -799,13 +810,33 @@
       langButtons.es.classList.toggle('is-active', lang === 'es');
       langButtons.es.setAttribute('aria-pressed', lang === 'es' ? 'true' : 'false');
     }
-    // Under reduced motion the crawl is static CSS (no 3D transform) and
-    // `place`/`knots` below were never reached — a plain content swap is
-    // the whole job here, and calling `place()` would set an inline
-    // transform that fights the reduced-motion stylesheet's `transform:
-    // none`, since an inline style always wins over one without !important.
+    // Fixed 2026-09-17 (real, reported drift): the word-count-share pacing
+    // this crawl uses is only an HONEST estimate of where the AUDIO's own
+    // English narration is — it has no reason to line up with a Spanish
+    // paragraph's word count, since Spanish isn't spoken at proportionally
+    // the same pace per idea as the English voice actually recorded. Running
+    // the animated position math in Español mode was producing an
+    // increasingly wrong, "way off" position as playback went on — a real
+    // reported bug, not a one-off. Español mode now uses the SAME honest
+    // static fallback prefers-reduced-motion already uses: readable text,
+    // no claimed position, rather than a confident-looking animated line
+    // that cannot actually mean what it means in English mode.
+    frame.classList.toggle('is-static', lang === 'es');
+    if (lang === 'es') {
+      // Not enough to stop calling place() (see the guard inside place()
+      // itself) — an earlier frame may have already left a 3D rotateX/
+      // translateY value sitting in the INLINE style attribute, and an
+      // inline style always wins over a stylesheet rule (even `.is-static
+      // .crawl-track { transform: none }`) unless that rule uses
+      // !important. Without clearing it explicitly, the text would freeze
+      // tilted and offset mid-crawl instead of actually going flat and
+      // readable — frozen wrong, not fixed. Clearing it here lets the
+      // stylesheet's own `transform: none` take over cleanly.
+      track.style.transform = '';
+      return;
+    }
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    knots = null; // word counts changed — rebuild against the new text
+    knots = null; // word counts changed — rebuild against the new (English) text
     place();
   }
   if (langButtons.en) langButtons.en.addEventListener('click', function () { setLanguage('en'); });
@@ -864,6 +895,18 @@
   }
 
   function place() {
+    // Real fix (2026-09-17): the ONE guard this needs lives HERE, not just
+    // at the setLanguage() call site — `audio`'s `timeupdate`/`seeking`
+    // listeners below and the per-frame tick() loop all call place()
+    // directly, completely bypassing any check made only where setLanguage
+    // happened to call it once. Missing this is exactly what caused the
+    // reported "way off" drift: tick() kept calling place() every frame
+    // during playback regardless of language, silently reusing whatever
+    // knots existed (built for whichever text was on screen when buildKnots
+    // last ran) against real audio progress — increasingly wrong the longer
+    // playback continued. One check here is the only way every caller is
+    // actually covered.
+    if (frame.classList.contains('is-static')) return;
     if (!knots) buildKnots();
     var viewportH = frame.clientHeight;
     var duration = audio.duration || 0;
