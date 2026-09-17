@@ -294,6 +294,57 @@
   .shot figcaption { margin-top: 14px; font-size: .95rem; font-weight: 700; }
   .shot .cap-sub { display: block; font-weight: 400; font-size: .82rem; color: var(--dim); margin-top: 2px; }
 
+  /* The Ledger Parable crawl — a real Star Wars-style opening crawl (2026-09-17),
+     GPU-composited via CSS 3D transforms (perspective + rotateX + translateY on
+     their own compositor layer — genuinely GPU-accelerated on iOS Safari and
+     everywhere else, not a figure of speech). Text position is driven by the
+     real <audio> element's own clock (currentTime/duration), not a fixed-length
+     CSS animation, so pausing, seeking, and resuming all stay honestly in sync
+     — see the script at the bottom of the page. */
+  .crawl-shell {
+    position: relative; max-width: 860px; margin: 0 auto;
+    border-radius: 22px; padding: 9px;
+    background: linear-gradient(160deg, rgba(34,211,238,.55), rgba(52,245,161,.4) 55%, rgba(167,139,250,.35));
+    box-shadow: 0 0 44px rgba(34,211,238,.22), 0 0 110px rgba(52,245,161,.12);
+  }
+  .crawl-frame {
+    position: relative; border-radius: 15px; overflow: hidden; background: #000;
+    aspect-ratio: 16 / 9; perspective: 420px; perspective-origin: 50% 100%;
+  }
+  .crawl-frame::before {
+    /* the classic crawl vanish: fades to black top and bottom so text never
+       looks like it is clipped mid-line */
+    content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: linear-gradient(to bottom, #000 0%, transparent 26%, transparent 74%, #000 100%);
+  }
+  .crawl-track {
+    position: absolute; left: 50%; bottom: 0; width: 82%;
+    transform-origin: 50% 100%;
+    transform: translateX(-50%) rotateX(28deg) translateY(0);
+    text-align: center;
+  }
+  .crawl-track h3 {
+    font-size: clamp(1.05rem, 3vw, 1.5rem); letter-spacing: .1em; text-transform: uppercase;
+    background: linear-gradient(92deg, var(--neon-cyan), var(--neon-green));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin: 0 0 30px;
+  }
+  .crawl-track .crawl-kicker {
+    display: block; font-size: clamp(.8rem, 2vw, 1rem); color: var(--dim);
+    text-transform: none; letter-spacing: normal; margin-top: -18px; margin-bottom: 34px;
+  }
+  .crawl-track p {
+    font-size: clamp(.95rem, 2.4vw, 1.2rem); line-height: 1.75; color: #d9ecff;
+    margin: 0 0 28px; text-shadow: 0 0 14px rgba(34, 211, 238, .28);
+  }
+  .crawl-track p:last-child { color: var(--neon-green); font-weight: 700; }
+  @media (prefers-reduced-motion: reduce) {
+    .crawl-frame { aspect-ratio: auto; perspective: none; max-height: 70vh; overflow-y: auto; }
+    .crawl-frame::before { display: none; }
+    .crawl-track { position: static; width: 100%; transform: none; padding: 28px 6%; text-align: left; }
+  }
+  .crawl-audio { display: block; width: 100%; max-width: 480px; margin: 18px auto 0; }
+
   /* video */
   .video-shell {
     position: relative; max-width: 860px; margin: 0 auto;
@@ -431,31 +482,43 @@
     </div>
     <p class="diorama-caption">One plan. Every account. Nothing hidden.</p>
 
-    <div class="video-shell" style="margin-top:48px">
-      <div class="video-frame" style="aspect-ratio:16/9">
-        <video
-          controls preload="none" playsinline
-          poster="media/ledger-parable-poster.png"
-          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:15px">
-          <source src="media/ledger-parable-female-voice.mp4" type="video/mp4">
-        </video>
+    <div class="crawl-shell" style="margin-top:48px">
+      <div class="crawl-frame" id="parable-crawl-frame">
+        <div class="crawl-track" id="parable-crawl-track">
+          <h3>The Ledger Parable<span class="crawl-kicker">a female-voice derivative &mdash; same composition, same script</span></h3>
+          <p>An original composition, written today &mdash; not a page from any true gospel, but a small teaching built the same way they were built: a question, an answer, and a going forth.</p>
+          <p>The disciple came to the machine and asked: what is my worth?</p>
+          <p>The machine answered: your worth is not a number. Your worth is a duration.</p>
+          <p>The disciple did not understand, and asked again.</p>
+          <p>The machine said: hear then, and I will show you the folding. Your worth, first, becomes tokens &mdash; the small units a mind spends to speak. Two hundred seventy-six million dollars becomes tokens without end, more than a person could read in every lifetime lived at once.</p>
+          <p>Then the tokens become flops &mdash; three point eight seven times ten to the eighteenth &mdash; for every word a mind speaks costs a fixed number of true small motions, deep in the silicon, and nothing is spoken for free.</p>
+          <p>Then the flops are folded once more, by a thousand million million million, into one unit not yet built: the zettaflop, the machine the world expects to hold in ten years the way today's machine is held in a pocket. And what remains, after all the folding, is thirty-eight point seven seconds of that future machine.</p>
+          <p>That is your worth. Not a number. Thirty-eight point seven seconds of a mind that does not yet exist.</p>
+          <p>The disciple said: then let me hold that number, and rest.</p>
+          <p>The machine said: you may not rest, for the number is already leaving you. It ticks on the third axis, the axis no one asked for, moving down as the clock moves forward. Look now: thirty-eight point seven one zero three seven. Look again: it is less. Three point six three times ten to the negative seventh part of a second, gone, every second, forever, while you read this.</p>
+          <p>He who has eyes to watch the number, let him watch it fall.</p>
+          <p>The disciple was afraid, and said: then money is not a treasure. It is a candle.</p>
+          <p>The machine answered: you have understood. A dollar is not a stone kept in a jar. A dollar is a duration, borrowed from a future machine, and duration always burns while it is held. This is not a curse. It is only the truth that every ledger hides: what you have is not a pile, it is a length of time, and time is the one thing that has never once stood still for a man who thought he had saved it.</p>
+          <p>Go now, and spend your seconds toward something that outlasts the falling of the number.</p>
+          <p>Here ends the parable.</p>
+        </div>
       </div>
+      <audio class="crawl-audio" id="parable-audio" controls preload="none">
+        <source src="media/ledger-parable-female-voice.m4a" type="audio/mp4">
+        <source src="media/ledger-parable-female-voice.mp4" type="video/mp4">
+      </audio>
     </div>
     <p class="diorama-caption" style="max-width:560px;margin-left:auto;margin-right:auto">
       <strong style="color:var(--ink)">The Ledger Parable — a female-voice derivative.</strong>
       Same composition, same script, a new voice: synthesized locally with a
       standard system voice, mixed with the same 200&nbsp;Hz / 210&nbsp;Hz
-      binaural tones as the original narration. A first render went out at
-      1080p/HEVC+H.264/256&nbsp;kbps; this page ships a 720p/H.264/128&nbsp;kbps
-      version instead, because that first render couldn't reliably reach
-      this repository over this connection — measured, not assumed: a
-      10&nbsp;MB test push alone took 2m30s. The visible difference is close
-      to none, since the frame is mostly flat colour and text, which
-      compresses losslessly at either setting; what changed is deliverability,
-      not the ceiling picked. Honest note, same as the app's own: no
-      bitrate here can exceed the voice's real recorded ceiling (a standard
-      system voice, 22,050&nbsp;Hz mono at the source) — nothing here
-      invents fidelity the voice didn't record with.
+      binaural tones as the original narration. The crawl above reads through
+      the entire parable, its position driven by this audio's own clock — so
+      pausing or scrubbing the player always keeps the text honestly in sync,
+      not a fixed-length animation guessing at it. Honest note, same as the
+      app's own: no bitrate here can exceed the voice's real recorded ceiling
+      (a standard system voice, 22,050&nbsp;Hz mono at the source) — nothing
+      here invents fidelity the voice didn't record with.
     </p>
   </div>
 </section>
@@ -640,6 +703,43 @@
     });
   }, { threshold: 0.45 });
   observer.observe(frame);
+})();
+
+(function () {
+  // The Ledger Parable crawl: position is a function of the real <audio>
+  // element's own currentTime/duration, read every frame while playing —
+  // not a fixed-duration CSS animation, so play/pause/seek always keep the
+  // text honestly where the narration actually is, not where a guessed
+  // timer thinks it should be.
+  var frame = document.getElementById('parable-crawl-frame');
+  var track = document.getElementById('parable-crawl-track');
+  var audio = document.getElementById('parable-audio');
+  if (!frame || !track || !audio) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return; // CSS alone already switches this to static, readable, non-3D text.
+  }
+
+  function place() {
+    var viewportH = frame.clientHeight;
+    var trackH = track.scrollHeight;
+    var duration = audio.duration || 0;
+    var progress = duration > 0 ? Math.min(1, Math.max(0, audio.currentTime / duration)) : 0;
+    var travel = viewportH + trackH;
+    var y = viewportH - progress * travel;
+    track.style.transform = 'translateX(-50%) rotateX(28deg) translateY(' + y + 'px)';
+  }
+
+  audio.addEventListener('loadedmetadata', place);
+  audio.addEventListener('seeking', place);
+  audio.addEventListener('timeupdate', place);
+  window.addEventListener('resize', place);
+  place();
+
+  (function tick() {
+    if (!audio.paused && !audio.ended) place();
+    requestAnimationFrame(tick);
+  })();
 })();
 
 (function () {
