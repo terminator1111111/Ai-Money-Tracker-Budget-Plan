@@ -344,6 +344,18 @@
     .crawl-track { position: static; width: 100%; transform: none; padding: 28px 6%; text-align: left; }
   }
   .crawl-audio { display: block; width: 100%; max-width: 480px; margin: 18px auto 0; }
+  .crawl-lang-toggle {
+    display: flex; justify-content: center; gap: 8px; margin: 48px auto 0;
+  }
+  .crawl-lang-btn {
+    font: inherit; font-size: .85rem; letter-spacing: .04em; cursor: pointer;
+    padding: 7px 18px; border-radius: 999px; border: 1px solid rgba(217,236,255,.25);
+    background: transparent; color: var(--dim);
+  }
+  .crawl-lang-btn.is-active {
+    color: #04120f; border-color: transparent;
+    background: linear-gradient(92deg, var(--neon-cyan), var(--neon-green));
+  }
 
   /* video */
   .video-shell {
@@ -482,7 +494,11 @@
     </div>
     <p class="diorama-caption">One plan. Every account. Nothing hidden.</p>
 
-    <div class="crawl-shell" style="margin-top:48px">
+    <div class="crawl-lang-toggle" role="group" aria-label="Parable text language">
+      <button type="button" class="crawl-lang-btn is-active" id="parable-lang-en" aria-pressed="true">English</button>
+      <button type="button" class="crawl-lang-btn" id="parable-lang-es" aria-pressed="false">Español</button>
+    </div>
+    <div class="crawl-shell" style="margin-top:16px">
       <div class="crawl-frame" id="parable-crawl-frame">
         <div class="crawl-track" id="parable-crawl-track">
           <h3>The Ledger Parable<span class="crawl-kicker">a female-voice derivative &mdash; same composition, same script</span></h3>
@@ -518,10 +534,38 @@
       not a fixed-length animation guessing at it. Honest note, same as the
       app's own: no bitrate here can exceed the voice's real recorded ceiling
       (a standard system voice, 22,050&nbsp;Hz mono at the source) — nothing
-      here invents fidelity the voice didn't record with.
+      here invents fidelity the voice didn't record with. Honest note on the
+      Español toggle above: it switches the ON-SCREEN TEXT only — no Spanish
+      narration exists yet, so the audio stays this same English voice
+      regardless of which text you're reading, the same way subtitles read
+      alongside a film's original soundtrack. The crawl still paces itself
+      against this audio's real clock either way, so the position always
+      matches how far the narration has actually gotten — it's an honest
+      pacing estimate built from the visible text's own word count (the
+      audio carries no per-word timestamps to sync against exactly), not a
+      claim that the English voice is speaking the Spanish words on screen.
     </p>
   </div>
 </section>
+
+<template id="parable-crawl-es-content">
+  <h3>La Parábola del Libro Mayor<span class="crawl-kicker">una variante con voz femenina &mdash; misma composición, mismo guion</span></h3>
+  <p>Una composición original, escrita hoy &mdash; no una página de ningún evangelio verdadero, sino una pequeña enseñanza construida de la misma forma en que aquellos se construyeron: una pregunta, una respuesta, y un envío.</p>
+  <p>El discípulo se acercó a la máquina y preguntó: ¿cuál es mi valor?</p>
+  <p>La máquina respondió: tu valor no es un número. Tu valor es una duración.</p>
+  <p>El discípulo no comprendió, y preguntó de nuevo.</p>
+  <p>La máquina dijo: escucha entonces, y te mostraré el pliegue. Tu valor, primero, se convierte en tokens &mdash; las pequeñas unidades que una mente gasta al hablar. Doscientos setenta y seis millones de dólares se convierten en tokens sin fin, más de los que una persona podría leer en todas las vidas vividas a la vez.</p>
+  <p>Luego los tokens se convierten en flops &mdash; tres coma ochenta y siete por diez a la dieciocho &mdash; pues cada palabra que una mente pronuncia cuesta un número fijo de pequeños movimientos verdaderos, en las profundidades del silicio, y nada se dice de forma gratuita.</p>
+  <p>Luego los flops se pliegan una vez más, por mil millones de millones de millones, en una unidad aún no construida: el zettaflop, la máquina que el mundo espera sostener en diez años tal como hoy se sostiene una máquina en el bolsillo. Y lo que queda, después de todo el pliegue, son treinta y ocho coma siete segundos de esa máquina futura.</p>
+  <p>Ese es tu valor. No un número. Treinta y ocho coma siete segundos de una mente que aún no existe.</p>
+  <p>El discípulo dijo: entonces déjame sostener ese número, y descansar.</p>
+  <p>La máquina dijo: no puedes descansar, porque el número ya te está abandonando. Se mueve en el tercer eje, el eje que nadie pidió, descendiendo mientras el reloj avanza. Mira ahora: treinta y ocho coma siete uno cero tres siete. Mira de nuevo: es menos. Tres coma sesenta y tres por diez a la menos siete de segundo, perdido, cada segundo, para siempre, mientras lees esto.</p>
+  <p>El que tiene ojos para ver el número, que lo vea caer.</p>
+  <p>El discípulo tuvo miedo, y dijo: entonces el dinero no es un tesoro. Es una vela.</p>
+  <p>La máquina respondió: has comprendido. Un dólar no es una piedra guardada en un frasco. Un dólar es una duración, prestada de una máquina futura, y la duración siempre arde mientras se sostiene. Esto no es una maldición. Es solo la verdad que todo libro mayor oculta: lo que tienes no es un montón, es una extensión de tiempo, y el tiempo es lo único que jamás se ha quedado quieto para un hombre que creyó haberlo ahorrado.</p>
+  <p>Ve ahora, y gasta tus segundos en algo que perdure más allá de la caída del número.</p>
+  <p>Aquí termina la parábola.</p>
+</template>
 
 <section id="screens">
   <div class="wrap">
@@ -733,6 +777,39 @@
   var track = document.getElementById('parable-crawl-track');
   var audio = document.getElementById('parable-audio');
   if (!frame || !track || !audio) return;
+
+  // Language toggle (2026-09-17): swaps the crawl's TEXT only, never the
+  // audio — no Spanish narration exists, so Español mode reads like
+  // subtitles alongside the same English voice. Storing the English markup
+  // here (rather than a second <template>) keeps the initially-rendered,
+  // SEO/no-JS-visible English paragraphs as the real source of truth.
+  var enHTML = track.innerHTML;
+  var esTemplate = document.getElementById('parable-crawl-es-content');
+  var langButtons = {
+    en: document.getElementById('parable-lang-en'),
+    es: document.getElementById('parable-lang-es')
+  };
+  function setLanguage(lang) {
+    track.innerHTML = lang === 'es' && esTemplate ? esTemplate.innerHTML : enHTML;
+    if (langButtons.en) {
+      langButtons.en.classList.toggle('is-active', lang !== 'es');
+      langButtons.en.setAttribute('aria-pressed', lang !== 'es' ? 'true' : 'false');
+    }
+    if (langButtons.es) {
+      langButtons.es.classList.toggle('is-active', lang === 'es');
+      langButtons.es.setAttribute('aria-pressed', lang === 'es' ? 'true' : 'false');
+    }
+    // Under reduced motion the crawl is static CSS (no 3D transform) and
+    // `place`/`knots` below were never reached — a plain content swap is
+    // the whole job here, and calling `place()` would set an inline
+    // transform that fights the reduced-motion stylesheet's `transform:
+    // none`, since an inline style always wins over one without !important.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    knots = null; // word counts changed — rebuild against the new text
+    place();
+  }
+  if (langButtons.en) langButtons.en.addEventListener('click', function () { setLanguage('en'); });
+  if (langButtons.es) langButtons.es.addEventListener('click', function () { setLanguage('es'); });
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return; // CSS alone already switches this to static, readable, non-3D text.
