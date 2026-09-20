@@ -258,6 +258,7 @@
     animation: diorama-float 6s ease-in-out infinite;
   }
   @keyframes diorama-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
+  .diorama-chip-badge img { width: 40px; height: 40px; border-radius: 10px; }
   /* Each chip's own position in the stage (translateX/Y set the 2D axis,
      --z sets depth) plus a lighter, larger, blurrier shadow the further
      back it sits — the actual depth cue, not the z-index. */
@@ -462,7 +463,11 @@
 
 <header class="wrap" id="top">
   <!-- RELEASE-BANNER-TOP:START -->
-  <p class="release-banner" data-app-build="25" data-app-version="4.0">Now shipping Version 4.0, Build 25 (2026-09-19) &mdash; Real light and weather context, a free values-reflection tool, and Tutor groundwork</p>
+  <!-- release-banner lettering removed from the page per owner instruction 2026-09-20
+       (only the Ledger Parable narration should remain as visible lettering); the
+       build/version data stays here in a comment so tools/sync_release_banner.py's
+       sync_delta check still has something real to read back.
+       data-app-build="25" data-app-version="4.0" data-app-date="2026-09-19" -->
   <!-- RELEASE-BANNER-TOP:END -->
 <img class="hero-logo" src="assets/logo-192.png" alt="" width="76" height="76">
   <span class="badge">Exclusively for Apple iOS Devices</span>
@@ -479,7 +484,7 @@
     <a class="cta primary" href="https://apps.apple.com/us/app/id6810417535">Download on the App&nbsp;Store</a>
     -->
     <a class="cta primary" href="#pricing">Coming soon to the App&nbsp;Store</a>
-    <a class="cta ghost" href="https://github.com/terminator1111111/Ai-Money-Tracker/blob/main/PRIVACY.md">Read our Privacy Promise</a>
+    <a class="cta ghost" href="/privacy">Read our Privacy Promise</a>
   </div>
   <p class="note">Exclusively on iPhone — not available on Android · Free to download · Built for military families, students, and every household in between</p>
   <img class="usa-badge" src="assets/made-in-usa.png" alt="Made in U.S.A. — designed, built, and supported in the United States" width="92" height="92">
@@ -496,7 +501,7 @@
         <div class="diorama-chip c2" role="img" aria-label="Instant health checks">✅</div>
         <div class="diorama-chip c3" role="img" aria-label="Banks, connected">🏦</div>
         <div class="diorama-chip c4" role="img" aria-label="Bank-grade security">🔒</div>
-        <div class="diorama-chip c5" role="img" aria-label="Made in the U.S.A.">🇺🇸</div>
+        <div class="diorama-chip c5 diorama-chip-badge" role="img" aria-label="Made in the U.S.A."><img src="assets/made-in-usa.png" alt="" width="40" height="40"></div>
         <figure class="diorama-hero">
           <img src="screenshots/plan.png" alt="AI Money Tracker's Plan screen, the center of the app" loading="lazy">
         </figure>
@@ -704,11 +709,13 @@
 <footer>
   <div class="wrap">
     <!-- RELEASE-BANNER-BOTTOM:START -->
-    <p class="release-banner" data-app-build="25" data-app-version="4.0">Currently shipping Version 4.0, Build 25 &middot; 2026-09-19</p>
+    <!-- release-banner lettering removed from the page per owner instruction 2026-09-20
+         (see the matching comment in <header id="top"> above for why this stays a comment).
+         data-app-build="25" data-app-version="4.0" data-app-date="2026-09-19" -->
     <!-- RELEASE-BANNER-BOTTOM:END -->
 <p style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
       <img src="assets/logo-64.png" alt="" width="26" height="26" style="display:block">
-      <strong>AI Money Tracker</strong> · <a href="https://github.com/terminator1111111/Ai-Money-Tracker/blob/main/PRIVACY.md">Privacy Policy</a> · Support: <a href="mailto:support@ai-money-tracker.com">support@ai-money-tracker.com</a></p>
+      <strong>AI Money Tracker</strong> · <a href="/privacy">Privacy Policy</a> · Support: <a href="mailto:support@ai-money-tracker.com">support@ai-money-tracker.com</a></p>
     <p style="margin-top:8px">AI Money Tracker is available exclusively for Apple iOS devices, only on the App&nbsp;Store. It is not available on Android or on the web.</p>
     <p style="margin-top:8px">© 2026 Michael Ramirez. All rights reserved. Apple, the Apple logo, and Sign in with Apple are trademarks of Apple Inc. Plaid is a trademark of Plaid Inc.</p>
   </div>
