@@ -641,7 +641,7 @@
     <h2>See it work in <span class="grad">under a minute</span></h2>
     <p class="lede">You just saw what AI Money Tracker does. Now watch it happen — real app, real plan, no jargon. The video starts on its own; tap the button for sound.</p>
     <div class="video-shell">
-      <div class="video-frame" id="video-frame" data-video-id="DjvEQTVSeeU">
+      <div class="video-frame" id="video-frame" data-vimeo-id="1228709817">
         <button class="sound-btn" id="sound-btn" type="button">🔊 Tap for sound</button>
       </div>
     </div>
@@ -721,39 +721,37 @@
   </div>
 </footer>
 
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script>
 (function () {
   var frame = document.getElementById('video-frame');
   var soundBtn = document.getElementById('sound-btn');
   if (!frame) return;
 
-  var player = null;
-  var unmuted = false;
-
-  function send(cmd, args) {
-    if (!player || !player.contentWindow) return;
-    player.contentWindow.postMessage(JSON.stringify({ event: 'command', func: cmd, args: args || [] }), '*');
-  }
+  var iframeEl = null;
+  var vimeoPlayer = null;
 
   function buildPlayer() {
-    if (player) return;
-    player = document.createElement('iframe');
-    player.src = 'https://www.youtube-nocookie.com/embed/' + frame.dataset.videoId +
-      '?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1' +
-      '&origin=' + encodeURIComponent(location.origin);
-    player.title = 'AI Money Tracker — see it work in under a minute';
-    player.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-    player.setAttribute('allowfullscreen', '');
-    frame.insertBefore(player, soundBtn);
+    if (iframeEl) return;
+    iframeEl = document.createElement('iframe');
+    iframeEl.src = 'https://player.vimeo.com/video/' + frame.dataset.vimeoId +
+      '?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1';
+    iframeEl.title = 'The Tin';
+    iframeEl.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share';
+    iframeEl.setAttribute('allowfullscreen', '');
+    iframeEl.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.insertBefore(iframeEl, soundBtn);
     soundBtn.classList.add('show');
+    if (window.Vimeo && window.Vimeo.Player) {
+      vimeoPlayer = new Vimeo.Player(iframeEl);
+    }
   }
 
   soundBtn.addEventListener('click', function () {
-    unmuted = true;
-    send('unMute');
-    send('setVolume', [100]);
-    send('seekTo', [0, true]);
-    send('playVideo');
+    if (!vimeoPlayer) return;
+    vimeoPlayer.setMuted(false);
+    vimeoPlayer.setVolume(1);
+    vimeoPlayer.play();
     soundBtn.classList.remove('show');
   });
 
@@ -763,10 +761,10 @@
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         buildPlayer();
-        send('playVideo');
-      } else if (player) {
+        if (vimeoPlayer) vimeoPlayer.play();
+      } else if (vimeoPlayer) {
         // pause politely when scrolled away so audio never chases the reader
-        send('pauseVideo');
+        vimeoPlayer.pause();
       }
     });
   }, { threshold: 0.45 });
