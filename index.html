@@ -377,15 +377,6 @@
     aspect-ratio: 16 / 9;
   }
   .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .sound-btn {
-    position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 3;
-    display: none; align-items: center; gap: 8px; cursor: pointer;
-    font: inherit; font-size: .9rem; font-weight: 800; color: #04121a;
-    padding: 10px 22px; border: 0; border-radius: 999px;
-    background: linear-gradient(92deg, var(--neon-cyan), var(--neon-green));
-    box-shadow: 0 0 24px rgba(34, 211, 238, 0.5);
-  }
-  .sound-btn.show { display: inline-flex; }
   .video-cta { text-align: center; margin-top: 30px; }
 
   /* pricing */
@@ -639,11 +630,9 @@
 <section id="video">
   <div class="wrap">
     <h2>See it work in <span class="grad">under a minute</span></h2>
-    <p class="lede">You just saw what AI Money Tracker does. Now watch it happen — real app, real plan, no jargon. The video starts on its own; tap the button for sound.</p>
+    <p class="lede">You just saw what AI Money Tracker does. Now watch it happen — real app, real plan, no jargon.</p>
     <div class="video-shell">
-      <div class="video-frame" id="video-frame" data-vimeo-id="1228709817">
-        <button class="sound-btn" id="sound-btn" type="button">🔊 Tap for sound</button>
-      </div>
+      <div class="video-frame" id="video-frame" data-vimeo-id="1228709817"></div>
     </div>
     <p class="video-cta">
       <a class="cta primary" href="#pricing">I'm ready — show me the plan</a>
@@ -725,7 +714,6 @@
 <script>
 (function () {
   var frame = document.getElementById('video-frame');
-  var soundBtn = document.getElementById('sound-btn');
   if (!frame) return;
 
   var iframeEl = null;
@@ -740,20 +728,11 @@
     iframeEl.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share';
     iframeEl.setAttribute('allowfullscreen', '');
     iframeEl.referrerPolicy = 'strict-origin-when-cross-origin';
-    frame.insertBefore(iframeEl, soundBtn);
-    soundBtn.classList.add('show');
+    frame.appendChild(iframeEl);
     if (window.Vimeo && window.Vimeo.Player) {
       vimeoPlayer = new Vimeo.Player(iframeEl);
     }
   }
-
-  soundBtn.addEventListener('click', function () {
-    if (!vimeoPlayer) return;
-    vimeoPlayer.setMuted(false);
-    vimeoPlayer.setVolume(1);
-    vimeoPlayer.play();
-    soundBtn.classList.remove('show');
-  });
 
   if (!('IntersectionObserver' in window)) { buildPlayer(); return; }
 
