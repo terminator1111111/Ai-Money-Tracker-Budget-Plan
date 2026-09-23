@@ -164,6 +164,15 @@
     display: block; margin-bottom: 4px;
   }
 
+  .pdf-embed-frame {
+    width: 100%; height: 640px; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--line); margin-bottom: 18px; background: #1a1a1a;
+  }
+  .pdf-embed-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  @media (max-width: 640px) {
+    .pdf-embed-frame { height: 420px; }
+  }
+
   .download-card {
     display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
     background: var(--glass-bg); background-image: var(--glass-tint);
@@ -198,7 +207,7 @@
     <p class="sub">Physics, linear algebra, color science, and tone-to-color math — every formula cited, every function tested against a cross-language parity check, computed in real IEEE&nbsp;754 double precision. Free on every tier, in every language.</p>
     <div class="cta-row">
       <a class="cta primary" href="#registry">See a sample of the registry</a>
-      <a class="cta ghost" href="numeric-precision-standard.pdf" download>Download the precision spec (PDF)</a>
+      <a class="cta ghost" href="/calculator/numeric-precision-standard.pdf" download>Download the precision spec (PDF)</a>
     </div>
   </div>
 </header>
@@ -241,23 +250,17 @@
 <section id="precision">
   <div class="wrap">
     <h2>Built on a real precision standard</h2>
-    <p class="body-text">Every one of these engines runs in <strong>IEEE 754 double precision</strong> (binary64) — the same 64-bit format used by Python's native <code>float</code> and Swift's native <code>Double</code> by default. That's a deliberate choice, verified rather than assumed:</p>
-    <table class="spec">
-      <tr><th>Property</th><th>Value</th><th>What it means</th></tr>
-      <tr><td>Mantissa width</td><td><code>53 bits</code></td><td>The real bit budget for significant digits</td></tr>
-      <tr><td>Guaranteed decimal digits</td><td><code>15</code></td><td>Any number with ≤15 significant digits round-trips exactly</td></tr>
-      <tr><td>Machine epsilon</td><td><code>2.220446049250313e-16</code></td><td>The smallest gap between representable numbers near 1.0</td></tr>
-    </table>
-    <p class="body-text">In practice, that's roughly <strong>15–17 significant decimal digits</strong> of usable precision — a step above a real, documented graphing calculator like the Texas Instruments TI-84 Plus/CE line, which runs a fixed-point format at 14 significant digits internally.</p>
-    <p class="body-text">This precision tier is deliberately kept separate from money math: every dollar figure in the app — budgets, balances, cost-of-living data — uses exact decimal arithmetic instead, because IEEE 754 binary floats can't represent most decimal fractions exactly (the textbook case: 0.1&nbsp;+&nbsp;0.2&nbsp;≠&nbsp;0.3 in double precision). A budget rounds exactly; a physics calculation runs in the format built for it. Two different jobs, two purpose-fit tools.</p>
-    <p class="body-text">The full write-up — including a real example of a transcription error this engine's own verification step caught before it ever shipped — is in the downloadable spec below.</p>
+    <p class="lede">The full engineering write-up, as a real PDF — not a duplicated web page. Rendered below and downloadable above.</p>
+    <div class="pdf-embed-frame">
+      <iframe src="/calculator/numeric-precision-standard.pdf" title="Numeric Precision Standard: IEEE 754 vs. Exact Decimal" loading="lazy"></iframe>
+    </div>
     <div class="download-card">
       <span class="file-ico">PDF</span>
       <div class="file-meta">
         <strong>Numeric Precision Standard: IEEE 754 vs. Exact Decimal</strong>
-        <span>2 pages · plain text, no scan · public reference edition</span>
+        <span>3 pages · plain text, no scan · public reference edition</span>
       </div>
-      <a class="cta primary" href="numeric-precision-standard.pdf" download>Download PDF</a>
+      <a class="cta primary" href="/calculator/numeric-precision-standard.pdf" download>Download PDF</a>
     </div>
   </div>
 </section>
