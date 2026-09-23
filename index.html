@@ -295,6 +295,52 @@
   .shot figcaption { margin-top: 14px; font-size: .95rem; font-weight: 700; }
   .shot .cap-sub { display: block; font-weight: 400; font-size: .82rem; color: var(--dim); margin-top: 2px; }
 
+  /* Calculator CTA tile -- a soft, drifting glow ("digital smoke") behind
+     the link, in the same bloom/luminous-highlight spirit as the
+     Babylon Pixel graphics standard, translated into what a static page
+     can actually do: no literal "4K"/"HDR" claim (neither applies to a
+     browser tab), just a tasteful animated CSS glow using the site's
+     existing neon palette. Respects prefers-reduced-motion globally
+     (see the top-of-file rule) and prefers-reduced-transparency below. */
+  .calc-cta {
+    position: relative; display: block; margin-top: 30px; padding: 30px 26px;
+    border-radius: 22px; text-decoration: none; color: var(--ink);
+    border: 1px solid var(--line); overflow: hidden;
+    background: var(--glass-bg); background-image: var(--glass-tint);
+    backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .calc-cta:hover { border-color: rgba(34, 211, 238, 0.5); transform: translateY(-2px); }
+  .calc-cta::before {
+    content: ""; position: absolute; inset: -40%; z-index: -1;
+    background:
+      radial-gradient(38% 45% at 20% 30%, rgba(34,211,238,.22), transparent 70%),
+      radial-gradient(34% 40% at 80% 70%, rgba(167,139,250,.18), transparent 70%),
+      radial-gradient(30% 36% at 60% 15%, rgba(52,245,161,.14), transparent 70%);
+    filter: blur(30px);
+    animation: smoke-drift 16s ease-in-out infinite;
+  }
+  @keyframes smoke-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(3%, -4%) scale(1.08); }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .calc-cta { background: #101827; background-image: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  }
+  .calc-cta .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--neon-cyan); margin-bottom: 8px; display: block;
+  }
+  .calc-cta h3 { font-size: 1.15rem; margin-bottom: 6px; }
+  .calc-cta p { font-size: .9rem; color: var(--dim); max-width: 520px; }
+  .calc-cta .arrow { position: absolute; right: 26px; top: 50%; translate: 0 -50%; font-size: 1.3rem; color: var(--neon-cyan); }
+  .calc-cta-canvas {
+    position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%;
+    filter: blur(18px) saturate(1.35);
+    opacity: 0; transition: opacity 1.2s ease;
+    pointer-events: none;
+  }
+
   /* The Ledger Parable crawl — a real Star Wars-style opening crawl (2026-09-17),
      GPU-composited via CSS 3D transforms (perspective + rotateX + translateY on
      their own compositor layer — genuinely GPU-accelerated on iOS Safari and
@@ -444,6 +490,7 @@
     <div class="topbar-links">
       <a href="#scene">Experience</a>
       <a href="#screens">Features</a>
+      <a href="/calculator">Calculator</a>
       <a href="#video">Watch</a>
       <a href="#security">Security</a>
       <a href="#pricing">Pricing</a>
@@ -607,6 +654,13 @@
         <figcaption>You're In Control<span class="cap-sub">Privacy-first, delete everything anytime</span></figcaption>
       </figure>
     </div>
+    <a class="calc-cta" href="/calculator" id="calc-cta">
+      <canvas class="calc-cta-canvas" id="calc-smoke-canvas" aria-hidden="true"></canvas>
+      <span class="eyebrow">Also inside the app</span>
+      <h3>A real scientific calculator — cited, tested, free</h3>
+      <p>Physics, linear algebra, color science, and more, computed in IEEE&nbsp;754 double precision and cross-checked between Python and Swift. Free on every tier, in every language.</p>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
   </div>
 </section>
 
@@ -704,7 +758,7 @@
     <!-- RELEASE-BANNER-BOTTOM:END -->
 <p style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
       <img src="assets/logo-64.png" alt="" width="26" height="26" style="display:block">
-      <strong>AI Money Tracker</strong> · <a href="/privacy">Privacy Policy</a> · Support: <a href="mailto:support@ai-money-tracker.com">support@ai-money-tracker.com</a></p>
+      <strong>AI Money Tracker</strong> · <a href="/calculator">Calculator</a> · <a href="/privacy">Privacy Policy</a> · Support: <a href="mailto:support@ai-money-tracker.com">support@ai-money-tracker.com</a></p>
     <p style="margin-top:8px">AI Money Tracker is available exclusively for Apple iOS devices, only on the App&nbsp;Store. It is not available on Android or on the web.</p>
     <p style="margin-top:8px">© 2026 Michael Ramirez. All rights reserved. Apple, the Apple logo, and Sign in with Apple are trademarks of Apple Inc. Plaid is a trademark of Plaid Inc.</p>
   </div>
@@ -936,6 +990,138 @@
   });
   stage.addEventListener('mouseleave', function () {
     rig.style.transform = '';
+  });
+})();
+</script>
+
+<script>
+// Calculator CTA "digital smoke" — a real, hand-written WebGL shader, no
+// framework, no CDN dependency (matches this site's zero-JS-framework
+// convention everywhere else). Pure progressive enhancement: the CSS
+// ::before gradient (see .calc-cta::before) is the baseline that already
+// renders for every visitor; this canvas only fades in on top of it once
+// a WebGL context actually initializes and the first frame compiles
+// cleanly. Any failure (no WebGL, low-power mode, reduced motion) just
+// leaves the CSS version visible -- never a broken/blank tile.
+(function () {
+  var link = document.getElementById('calc-cta');
+  var canvas = document.getElementById('calc-smoke-canvas');
+  if (!link || !canvas) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+
+  var VERT = 'attribute vec2 aPos;' +
+    'void main(){gl_Position=vec4(aPos,0.0,1.0);}';
+
+  // Fragment shader: 2D simplex noise (Ashima Arts / Ian McEwan, MIT
+  // licensed, the standard citable GLSL simplex-noise implementation),
+  // domain-warped and animated over time, colored with this site's own
+  // --neon-cyan/--neon-green/--neon-violet palette for a soft drifting
+  // "smoke" fill. Single pass, no multi-sample blur -- the CSS
+  // filter:blur() on the canvas element itself provides the bloom
+  // softening cheaply instead of a second GPU pass.
+  var FRAG =
+    'precision mediump float;' +
+    'uniform vec2 uRes; uniform float uTime;' +
+    'vec3 mod289v3(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}' +
+    'vec2 mod289v2(vec2 x){return x-floor(x*(1.0/289.0))*289.0;}' +
+    'vec3 permute(vec3 x){return mod289v3(((x*34.0)+1.0)*x);}' +
+    'float snoise(vec2 v){' +
+    '  const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);' +
+    '  vec2 i=floor(v+dot(v,C.yy)); vec2 x0=v-i+dot(i,C.xx);' +
+    '  vec2 i1=(x0.x>x0.y)?vec2(1.0,0.0):vec2(0.0,1.0);' +
+    '  vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1; i=mod289v2(i);' +
+    '  vec3 p=permute(permute(i.y+vec3(0.0,i1.y,1.0))+i.x+vec3(0.0,i1.x,1.0));' +
+    '  vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0); m=m*m; m=m*m;' +
+    '  vec3 x=2.0*fract(p*C.www)-1.0; vec3 h=abs(x)-0.5;' +
+    '  vec3 ox=floor(x+0.5); vec3 a0=x-ox;' +
+    '  m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);' +
+    '  vec3 g; g.x=a0.x*x0.x+h.x*x0.y; g.yz=a0.yz*x12.xz+h.yz*x12.yw;' +
+    '  return 130.0*dot(m,g);' +
+    '}' +
+    'void main(){' +
+    '  vec2 uv=gl_FragCoord.xy/uRes.xy; vec2 p=uv*2.4; float t=uTime*0.06;' +
+    '  float n1=snoise(p+vec2(t,-t*0.7));' +
+    '  vec2 warp=vec2(n1, snoise(p-vec2(t*0.5,t)));' +
+    '  float n2=snoise(p*1.6+warp*0.8+t);' +
+    '  float smoke=smoothstep(-0.15,0.65,n2);' +
+    '  vec3 cyan=vec3(0.133,0.827,0.933); vec3 green=vec3(0.204,0.961,0.631); vec3 violet=vec3(0.655,0.545,0.980);' +
+    '  vec3 col=mix(cyan,violet,uv.x); col=mix(col,green,smoothstep(0.3,0.9,n1)*0.5);' +
+    '  float alpha=smoke*0.55*smoothstep(0.0,0.25,uv.y)*smoothstep(1.0,0.7,uv.y);' +
+    '  gl_FragColor=vec4(col*alpha,alpha);' +
+    '}';
+
+  function compile(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+    return s;
+  }
+  var vs = compile(gl.VERTEX_SHADER, VERT);
+  var fs = compile(gl.FRAGMENT_SHADER, FRAG);
+  if (!vs || !fs) return;
+  var prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  gl.useProgram(prog);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  // One full-viewport triangle, cheaper than a two-triangle quad.
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  var aPos = gl.getAttribLocation(prog, 'aPos');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+  var uRes = gl.getUniformLocation(prog, 'uRes');
+  var uTime = gl.getUniformLocation(prog, 'uTime');
+
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function resize() {
+    var w = Math.max(1, Math.round(canvas.clientWidth * dpr));
+    var h = Math.max(1, Math.round(canvas.clientHeight * dpr));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w; canvas.height = h;
+      gl.viewport(0, 0, w, h);
+    }
+  }
+  window.addEventListener('resize', resize);
+
+  var running = false;
+  var start = null;
+  function frame(ts) {
+    if (!running) return;
+    if (!start) start = ts;
+    resize();
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, (ts - start) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    requestAnimationFrame(frame);
+  }
+  function start_() {
+    if (running) return;
+    running = true;
+    resize();
+    canvas.style.opacity = '1';
+    requestAnimationFrame(frame);
+  }
+  function stop_() {
+    running = false;
+  }
+
+  // Only spend GPU/battery while the tile is actually visible on screen,
+  // and pause entirely when the tab isn't in the foreground.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.isIntersecting ? start_() : stop_(); });
+    }, { threshold: 0.05 }).observe(link);
+  } else {
+    start_();
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop_(); else if (link.getBoundingClientRect().top < window.innerHeight) start_();
   });
 })();
 </script>

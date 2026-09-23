@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Scientific Calculator — AI Money Tracker</title>
+<meta name="description" content="A real, cited scientific calculator built into AI Money Tracker: physics, linear algebra, color science, and tone-to-color math, computed in IEEE 754 double precision and cross-checked between Python and Swift. Free on every tier, in every language.">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo-192.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta property="og:title" content="The Scientific Calculator — AI Money Tracker">
+<meta property="og:description" content="Physics, linear algebra, color science, and tone-to-color math — cited, tested, and free on every tier. Built into AI Money Tracker for iPhone.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://ai-money-tracker.com/assets/logo-1024.png">
+<meta name="twitter:card" content="summary">
+<style>
+  :root {
+    --bg: #05070d;
+    --bg-2: #0a0f1a;
+    --ink: #eef4ff;
+    --dim: #8fa3bd;
+    --neon-cyan: #22d3ee;
+    --neon-green: #34f5a1;
+    --neon-violet: #a78bfa;
+    --neon-pink: #f472b6;
+    --line: rgba(94, 234, 212, 0.14);
+    --max: 880px;
+    --glass-bg: rgba(16, 22, 36, 0.46);
+    --glass-tint: linear-gradient(135deg, rgba(34,211,238,.10), rgba(167,139,250,.08));
+    --glass-edge: rgba(238, 244, 255, 0.5);
+    --glass-blur: blur(22px) saturate(1.7);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -2;
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgba(34, 211, 238, 0.13), transparent 70%),
+      radial-gradient(40% 30% at 85% 25%, rgba(167, 139, 250, 0.10), transparent 70%),
+      radial-gradient(45% 35% at 10% 60%, rgba(52, 245, 161, 0.07), transparent 70%),
+      var(--bg);
+  }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+  .back-link {
+    display: inline-block; margin: 28px 0 0 24px; font-size: 14px;
+    color: var(--neon-cyan); text-decoration: none; font-weight: 600;
+  }
+  .back-link:hover { color: var(--neon-green); }
+
+  header { padding: 40px 0 48px; text-align: center; }
+  .badge {
+    display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--neon-cyan);
+    border: 1px solid rgba(34, 211, 238, 0.5); border-radius: 999px; padding: 6px 18px;
+    margin-bottom: 24px; background: rgba(34, 211, 238, 0.06);
+  }
+  h1 { font-size: clamp(1.9rem, 5.4vw, 3rem); line-height: 1.14; letter-spacing: -0.02em; font-weight: 800; }
+  .grad {
+    background: linear-gradient(92deg, var(--neon-cyan) 0%, var(--neon-green) 45%, var(--neon-violet) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .sub { margin: 20px auto 0; max-width: 620px; font-size: 1.08rem; color: var(--dim); }
+  .cta-row { margin-top: 30px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta {
+    display: inline-block; padding: 13px 26px; border-radius: 14px; font-weight: 800;
+    text-decoration: none; font-size: .95rem; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .cta.primary {
+    background: linear-gradient(92deg, var(--neon-cyan), var(--neon-green));
+    color: #04121a;
+    box-shadow: 0 0 28px rgba(34, 211, 238, 0.45), 0 0 60px rgba(52, 245, 161, 0.18);
+  }
+  .cta.primary:hover { transform: translateY(-2px); }
+  .cta.ghost {
+    border: 1px solid var(--line); color: var(--ink);
+    background: var(--glass-bg); background-image: var(--glass-tint);
+    backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .cta.ghost { background: #101827; background-image: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  }
+
+  section { padding: 44px 0; position: relative; scroll-margin-top: 70px; }
+  section + section { border-top: 1px solid var(--line); }
+  h2 { font-size: clamp(1.4rem, 3.2vw, 1.9rem); letter-spacing: -0.01em; margin-bottom: 10px; font-weight: 800; }
+  .lede { color: var(--dim); max-width: 640px; margin-bottom: 28px; font-size: 1rem; }
+  p.body-text { font-size: .97rem; color: var(--dim); margin-bottom: 16px; max-width: 720px; }
+  p.body-text strong { color: var(--ink); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--glass-bg); background-image: var(--glass-tint);
+    border: 1px solid var(--line); border-radius: 16px; padding: 22px;
+    backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .card { background: #101827; background-image: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  }
+  .card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .card p { font-size: .9rem; color: var(--dim); }
+
+  table.spec { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: .88rem; }
+  table.spec th, table.spec td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+  table.spec th { background: rgba(34, 211, 238, 0.08); color: var(--ink); }
+  table.spec td { color: var(--dim); }
+  table.spec code { color: var(--neon-green); }
+
+  .registry-list { list-style: none; margin: 18px 0; }
+  .registry-list li {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .85rem; padding: 10px 14px; margin-bottom: 8px; border-radius: 10px;
+    background: rgba(255,255,255,0.03); border: 1px solid var(--line); color: var(--neon-green);
+    overflow-x: auto; white-space: pre;
+  }
+  .registry-list li .domain-tag {
+    font-family: -apple-system, sans-serif; font-weight: 700; font-size: .7rem;
+    text-transform: uppercase; letter-spacing: .08em; color: var(--neon-cyan);
+    display: block; margin-bottom: 4px;
+  }
+
+  .download-card {
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    background: var(--glass-bg); background-image: var(--glass-tint);
+    border: 1px solid var(--line); border-radius: 18px; padding: 26px;
+    backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .download-card { background: #101827; background-image: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  }
+  .download-card .file-ico {
+    width: 52px; height: 52px; flex: none; border-radius: 12px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
+    display: grid; place-items: center; font-size: 1.4rem; color: #04121a; font-weight: 800;
+  }
+  .download-card .file-meta { flex: 1; min-width: 200px; }
+  .download-card .file-meta strong { display: block; font-size: 1rem; }
+  .download-card .file-meta span { font-size: .85rem; color: var(--dim); }
+
+  footer { padding: 40px 0 60px; font-size: 13px; color: var(--dim); border-top: 1px solid var(--line); }
+  footer a { color: var(--neon-cyan); }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="/#screens">&larr; Back to AI Money Tracker</a>
+
+<header>
+  <div class="wrap">
+    <span class="badge">AI Engineer Calculations</span>
+    <h1>A scientific calculator with a <span class="grad">paper trail</span></h1>
+    <p class="sub">Physics, linear algebra, color science, and tone-to-color math — every formula cited, every function tested against a cross-language parity check, computed in real IEEE&nbsp;754 double precision. Free on every tier, in every language.</p>
+    <div class="cta-row">
+      <a class="cta primary" href="#registry">See a sample of the registry</a>
+      <a class="cta ghost" href="numeric-precision-standard.pdf" download>Download the precision spec (PDF)</a>
+    </div>
+  </div>
+</header>
+
+<section id="why">
+  <div class="wrap">
+    <h2>Why a budgeting app ships a real calculator</h2>
+    <p class="body-text">Most finance apps bolt on a basic four-function calculator as an afterthought. This one is different: it's the same "AI Engineer Calculations" engine used to verify the app's own budgeting math, opened up as a real, general-purpose scientific calculator — kinematics and Newton's laws, the ideal gas law, tensors and rotation matrices, CIE and OKLCH color science, even a frequency-to-color mapping for audio. Every function has a citation, every function has a test, and every function is computed the same exact way whether you're on the Python backend or the iOS app itself.</p>
+    <div class="grid">
+      <div class="card"><h3>Cited, not guessed</h3><p>Every constant traces to a real source — NIST CODATA, published academic transforms, standard textbook derivations — never a remembered number.</p></div>
+      <div class="card"><h3>Cross-language parity</h3><p>Each domain ships a golden-vectors test file: the Python reference computation is checked against the Swift implementation on your phone, to a stated numeric tolerance.</p></div>
+      <div class="card"><h3>Free, every tier, every language</h3><p>Not a premium feature. Not gated behind a subscription. It ships free because a genuinely useful tool shouldn't be a paywall bargaining chip.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="registry">
+  <div class="wrap">
+    <h2>A sample from the calculator registry</h2>
+    <p class="lede">Real function signatures, pulled directly from the shipped engine — not a mockup.</p>
+    <ul class="registry-list">
+      <li><span class="domain-tag">Physics</span>gravitational_force(mass1, mass2, separation_m) -&gt; float</li>
+      <li><span class="domain-tag">Physics</span>drag_force(velocity_ms, drag_coefficient, cross_section_area_m2) -&gt; float</li>
+      <li><span class="domain-tag">Physics</span>ideal_gas_pressure(n_moles, temperature_kelvin, volume_m3) -&gt; float</li>
+      <li><span class="domain-tag">Physics</span>pendulum_period_small_angle(length_m, gravity) -&gt; float</li>
+      <li><span class="domain-tag">Linear algebra / tensors</span>rotation_matrix_z(theta_radians) -&gt; ndarray</li>
+      <li><span class="domain-tag">Linear algebra / tensors</span>inertia_tensor_cuboid(mass, a, b, c) -&gt; ndarray</li>
+      <li><span class="domain-tag">Linear algebra / tensors</span>levi_civita_3d(i, j, k) -&gt; int</li>
+      <li><span class="domain-tag">Color science</span>correlated_color_temperature_mccamy(x, y) -&gt; float</li>
+      <li><span class="domain-tag">Color science</span>gamut_coverage_percent(gamut_triangle, reference_triangle) -&gt; float</li>
+      <li><span class="domain-tag">Tone &amp; color</span>srgb_to_oklch(r_srgb, g_srgb, b_srgb) -&gt; (L, C, H)</li>
+      <li><span class="domain-tag">Tone &amp; color</span>frequency_to_hue_degrees(frequency_hz, reference_hz) -&gt; float</li>
+      <li><span class="domain-tag">Statistics &amp; numerical methods</span>simpsons_rule(f, a, b, n) -&gt; float</li>
+      <li><span class="domain-tag">Statistics &amp; numerical methods</span>matrix_determinant(matrix) -&gt; float</li>
+      <li><span class="domain-tag">Statistics &amp; numerical methods</span>normal_pdf(x, mu, sigma) -&gt; float</li>
+    </ul>
+  </div>
+</section>
+
+<section id="precision">
+  <div class="wrap">
+    <h2>Built on a real precision standard</h2>
+    <p class="body-text">Every one of these engines runs in <strong>IEEE 754 double precision</strong> (binary64) — the same 64-bit format used by Python's native <code>float</code> and Swift's native <code>Double</code> by default. That's a deliberate choice, verified rather than assumed:</p>
+    <table class="spec">
+      <tr><th>Property</th><th>Value</th><th>What it means</th></tr>
+      <tr><td>Mantissa width</td><td><code>53 bits</code></td><td>The real bit budget for significant digits</td></tr>
+      <tr><td>Guaranteed decimal digits</td><td><code>15</code></td><td>Any number with ≤15 significant digits round-trips exactly</td></tr>
+      <tr><td>Machine epsilon</td><td><code>2.220446049250313e-16</code></td><td>The smallest gap between representable numbers near 1.0</td></tr>
+    </table>
+    <p class="body-text">In practice, that's roughly <strong>15–17 significant decimal digits</strong> of usable precision — a step above a real, documented graphing calculator like the Texas Instruments TI-84 Plus/CE line, which runs a fixed-point format at 14 significant digits internally.</p>
+    <p class="body-text">This precision tier is deliberately kept separate from money math: every dollar figure in the app — budgets, balances, cost-of-living data — uses exact decimal arithmetic instead, because IEEE 754 binary floats can't represent most decimal fractions exactly (the textbook case: 0.1&nbsp;+&nbsp;0.2&nbsp;≠&nbsp;0.3 in double precision). A budget rounds exactly; a physics calculation runs in the format built for it. Two different jobs, two purpose-fit tools.</p>
+    <p class="body-text">The full write-up — including a real example of a transcription error this engine's own verification step caught before it ever shipped — is in the downloadable spec below.</p>
+    <div class="download-card">
+      <span class="file-ico">PDF</span>
+      <div class="file-meta">
+        <strong>Numeric Precision Standard: IEEE 754 vs. Exact Decimal</strong>
+        <span>2 pages · plain text, no scan · public reference edition</span>
+      </div>
+      <a class="cta primary" href="numeric-precision-standard.pdf" download>Download PDF</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>AI Money Tracker</strong> · <a href="/">Home</a> · <a href="/privacy">Privacy Policy</a> · Support: <a href="mailto:support@ai-money-tracker.com">support@ai-money-tracker.com</a></p>
+    <p style="margin-top:8px">AI Money Tracker is available exclusively for Apple iOS devices, only on the App&nbsp;Store. It is not available on Android or on the web.</p>
+  </div>
+</footer>
+
+</body>
+</html>
