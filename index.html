@@ -206,6 +206,17 @@
     border: 1px solid rgba(34,211,238,.3);
     box-shadow: 0 0 16px rgba(34,211,238,.15);
   }
+  /* AMTP Babylon Glyphs (assets/icons/, see its README.md): original SVG
+     icons drawn on a 48-unit grid in the Babylon Pixel Guide's OKLCH brand
+     families. They replace the emoji characters this page used to show,
+     which each OS drew with its own emoji font (Apple Color Emoji on Apple
+     devices). The glow is the environment's light, one color for every
+     glyph: accentSecondary dark #41D9F1 (Theme.swift), kept soft so edges
+     stay crisp. */
+  .card .ico img, .diorama-chip .glyph {
+    display: block; width: 32px; height: 32px;
+    filter: drop-shadow(0 0 5px rgba(65, 217, 241, 0.3));
+  }
 
   /* "Experience" diorama — a bounded-axis (not free-orbit) 3D showcase
      built entirely from CSS transforms/perspective, no WebGL/canvas/3D
@@ -259,6 +270,7 @@
   }
   @keyframes diorama-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
   .diorama-chip-badge img { width: 40px; height: 40px; border-radius: 10px; }
+  .diorama-chip .glyph { width: 42px; height: 42px; }
   /* Each chip's own position in the stage (translateX/Y set the 2D axis,
      --z sets depth) plus a lighter, larger, blurrier shadow the further
      back it sits — the actual depth cue, not the z-index. */
@@ -272,6 +284,7 @@
     .diorama-stage { height: 340px; }
     .diorama-hero { width: 148px; margin-left: -74px; margin-top: -150px; }
     .diorama-chip { width: 58px; height: 58px; font-size: 22px; border-radius: 16px; }
+    .diorama-chip .glyph { width: 32px; height: 32px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .diorama-stage, .diorama-chip { animation: none; }
@@ -341,63 +354,6 @@
     pointer-events: none;
   }
 
-  /* The Ledger Parable crawl — a real Star Wars-style opening crawl (2026-09-17),
-     GPU-composited via CSS 3D transforms (perspective + rotateX + translateY on
-     their own compositor layer — genuinely GPU-accelerated on iOS Safari and
-     everywhere else, not a figure of speech). Text position is driven by the
-     real <audio> element's own clock (currentTime/duration), not a fixed-length
-     CSS animation, so pausing, seeking, and resuming all stay honestly in sync
-     — see the script at the bottom of the page. */
-  .crawl-shell {
-    position: relative; max-width: 860px; margin: 0 auto;
-    border-radius: 22px; padding: 9px;
-    background: linear-gradient(160deg, rgba(34,211,238,.55), rgba(52,245,161,.4) 55%, rgba(167,139,250,.35));
-    box-shadow: 0 0 44px rgba(34,211,238,.22), 0 0 110px rgba(52,245,161,.12);
-  }
-  .crawl-frame {
-    position: relative; border-radius: 15px; overflow: hidden; background: #000;
-    aspect-ratio: 16 / 9; perspective: 420px; perspective-origin: 50% 100%;
-  }
-  .crawl-frame::before {
-    /* the classic crawl vanish: fades to black top and bottom so text never
-       looks like it is clipped mid-line */
-    content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
-    background: linear-gradient(to bottom, #000 0%, transparent 26%, transparent 74%, #000 100%);
-  }
-  .crawl-track {
-    position: absolute; left: 50%; bottom: 0; width: 82%;
-    transform-origin: 50% 100%;
-    transform: translateX(-50%) rotateX(28deg) translateY(0);
-    text-align: center;
-  }
-  .crawl-track h3 {
-    font-size: clamp(1.05rem, 3vw, 1.5rem); letter-spacing: .1em; text-transform: uppercase;
-    background: linear-gradient(92deg, var(--neon-cyan), var(--neon-green));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin: 0 0 30px;
-  }
-  .crawl-track .crawl-kicker {
-    display: block; font-size: clamp(.8rem, 2vw, 1rem); color: var(--dim);
-    text-transform: none; letter-spacing: normal; margin-top: -18px; margin-bottom: 34px;
-  }
-  .crawl-track p {
-    font-size: clamp(.95rem, 2.4vw, 1.2rem); line-height: 1.75; color: #d9ecff;
-    margin: 0 0 28px; text-shadow: 0 0 14px rgba(34, 211, 238, .28);
-  }
-  .crawl-track p:last-child { color: var(--neon-green); font-weight: 700; }
-  /* Shared by prefers-reduced-motion AND .crawl-frame.is-static (2026-09-17):
-     the honest fallback for any case where the crawl's word-count-paced
-     position can't be trusted to mean anything real — reduced motion, or
-     a language the audio isn't actually speaking (see the JS below). */
-  @media (prefers-reduced-motion: reduce) {
-    .crawl-frame { aspect-ratio: auto; perspective: none; max-height: 70vh; overflow-y: auto; }
-    .crawl-frame::before { display: none; }
-    .crawl-track { position: static; width: 100%; transform: none; padding: 28px 6%; text-align: left; }
-  }
-  .crawl-frame.is-static { aspect-ratio: auto; perspective: none; max-height: 70vh; overflow-y: auto; }
-  .crawl-frame.is-static::before { display: none; }
-  .crawl-frame.is-static .crawl-track { position: static; width: 100%; transform: none; padding: 28px 6%; text-align: left; }
-  .crawl-audio { display: block; width: 100%; max-width: 480px; margin: 18px auto 0; }
   .crawl-lang-toggle {
     display: flex; justify-content: center; gap: 8px; margin: 48px auto 0;
   }
@@ -424,6 +380,15 @@
   }
   .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .video-cta { text-align: center; margin-top: 30px; }
+  /* Spanish Ledger Parable (2026-09-24): its own narrated read-along video
+     replaces the old Español mode (Spanish subtitles over the English voice).
+     Author display rules beat the [hidden] attribute, so restate it here. */
+  .video-shell[hidden], .parable-transcript[hidden] { display: none; }
+  .parable-shell { margin-top: 16px; }
+  .parable-transcript { max-width: 860px; margin: 14px auto 0; color: var(--dim); font-size: .95rem; }
+  .parable-transcript summary { cursor: pointer; text-align: center; }
+  .parable-transcript h3 { font-size: 1rem; margin: 16px 0 12px; }
+  .parable-transcript p { line-height: 1.7; margin: 0 0 14px; }
 
   /* pricing */
   .price-card {
@@ -459,8 +424,16 @@
   .trial { color: var(--neon-green); font-weight: 800; text-shadow: 0 0 14px rgba(52,245,161,.4); }
   ul.plain { list-style: none; margin: 20px 0; text-align: left; }
   ul.plain li { padding: 8px 0 8px 30px; position: relative; font-size: .95rem; }
-  ul.plain li::before { content: "✓"; position: absolute; left: 4px; color: var(--neon-green); font-weight: 800;
-    text-shadow: 0 0 10px rgba(52,245,161,.6); }
+  /* Bullet: the original Babylon tick (assets/icons/tick.svg) instead of a
+     font's check-mark character. It is centred on the first line box: 8px
+     padding plus half of a 1.65 x .95rem line, minus half its 18px height.
+     The glow is AMTP Green dark #83DD7A (Babylon Pixel Guide). */
+  ul.plain li::before {
+    content: ""; position: absolute; left: 4px; top: calc(8px + .95rem * 1.65 / 2 - 9px);
+    width: 18px; height: 18px;
+    background: url("assets/icons/tick.svg") center / contain no-repeat;
+    filter: drop-shadow(0 0 4px rgba(131, 221, 122, .55));
+  }
   .fine { font-size: .8rem; color: var(--dim); margin-top: 16px; }
 
   .promise-quote {
@@ -535,10 +508,10 @@
     <div class="diorama-stage" id="diorama-stage">
       <div class="diorama-rig" id="diorama-rig">
         <div class="diorama-floor" aria-hidden="true"></div>
-        <div class="diorama-chip c1" role="img" aria-label="What to fix first">🧭</div>
-        <div class="diorama-chip c2" role="img" aria-label="Instant health checks">✅</div>
-        <div class="diorama-chip c3" role="img" aria-label="Banks, connected">🏦</div>
-        <div class="diorama-chip c4" role="img" aria-label="Bank-grade security">🔒</div>
+        <div class="diorama-chip c1" role="img" aria-label="What to fix first"><img class="glyph" src="assets/icons/compass.svg" alt="" width="42" height="42"></div>
+        <div class="diorama-chip c2" role="img" aria-label="Instant health checks"><img class="glyph" src="assets/icons/health-gauge.svg" alt="" width="42" height="42"></div>
+        <div class="diorama-chip c3" role="img" aria-label="Banks, connected"><img class="glyph" src="assets/icons/bank.svg" alt="" width="42" height="42"></div>
+        <div class="diorama-chip c4" role="img" aria-label="Bank-grade security"><img class="glyph" src="assets/icons/vault.svg" alt="" width="42" height="42"></div>
         <div class="diorama-chip c5 diorama-chip-badge" role="img" aria-label="Made in the U.S.A."><img src="assets/made-in-usa.png" alt="" width="40" height="40"></div>
         <figure class="diorama-hero">
           <img src="screenshots/plan.png" alt="AI Money Tracker's Plan screen, the center of the app" loading="lazy">
@@ -547,57 +520,63 @@
     </div>
     <p class="diorama-caption">One plan. Every account. Nothing hidden.</p>
 
-    <div class="crawl-lang-toggle" role="group" aria-label="Parable text language">
+    <div class="crawl-lang-toggle" role="group" aria-label="Parable language">
       <button type="button" class="crawl-lang-btn is-active" id="parable-lang-en" aria-pressed="true">English</button>
       <button type="button" class="crawl-lang-btn" id="parable-lang-es" aria-pressed="false">Español</button>
     </div>
-    <div class="crawl-shell" style="margin-top:16px">
-      <div class="crawl-frame" id="parable-crawl-frame">
-        <div class="crawl-track" id="parable-crawl-track">
-          <h3>The Ledger Parable<span class="crawl-kicker">a female-voice derivative &mdash; same composition, same script</span></h3>
-          <p>An original composition, written today &mdash; not a page from any true gospel, but a small teaching built the same way they were built: a question, an answer, and a going forth.</p>
-          <p>The disciple came to the machine and asked: what is my worth?</p>
-          <p>The machine answered: your worth is not a number. Your worth is a duration.</p>
-          <p>The disciple did not understand, and asked again.</p>
-          <p>The machine said: hear then, and I will show you the folding. Your worth, first, becomes tokens &mdash; the small units a mind spends to speak. Two hundred seventy-six million dollars becomes tokens without end, more than a person could read in every lifetime lived at once.</p>
-          <p>Then the tokens become flops &mdash; three point eight seven times ten to the eighteenth &mdash; for every word a mind speaks costs a fixed number of true small motions, deep in the silicon, and nothing is spoken for free.</p>
-          <p>Then the flops are folded once more, by a thousand million million million, into one unit not yet built: the zettaflop, the machine the world expects to hold in ten years the way today's machine is held in a pocket. And what remains, after all the folding, is thirty-eight point seven seconds of that future machine.</p>
-          <p>That is your worth. Not a number. Thirty-eight point seven seconds of a mind that does not yet exist.</p>
-          <p>The disciple said: then let me hold that number, and rest.</p>
-          <p>The machine said: you may not rest, for the number is already leaving you. It ticks on the third axis, the axis no one asked for, moving down as the clock moves forward. Look now: thirty-eight point seven one zero three seven. Look again: it is less. Three point six three times ten to the negative seventh part of a second, gone, every second, forever, while you read this.</p>
-          <p>He who has eyes to watch the number, let him watch it fall.</p>
-          <p>The disciple was afraid, and said: then money is not a treasure. It is a candle.</p>
-          <p>The machine answered: you have understood. A dollar is not a stone kept in a jar. A dollar is a duration, borrowed from a future machine, and duration always burns while it is held. This is not a curse. It is only the truth that every ledger hides: what you have is not a pile, it is a length of time, and time is the one thing that has never once stood still for a man who thought he had saved it.</p>
-          <p>Go now, and spend your seconds toward something that outlasts the falling of the number.</p>
-          <p>Here ends the parable.</p>
-        </div>
+    <!-- The Ledger Parable (2026-09-24): one narrated read-along video per
+         language on Vimeo, replacing the audio-driven text crawl and the old
+         Español mode (Spanish subtitles over the English voice). dnt=1 asks
+         Vimeo not to set tracking cookies; the player streams adaptively
+         (HLS) at the best rendition the device and connection allow. -->
+    <div class="video-shell parable-shell" id="parable-en-shell" lang="en">
+      <div class="video-frame">
+        <iframe id="parable-en-player" src="https://player.vimeo.com/video/1230044004?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;dnt=1" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="The Ledger Parable"></iframe>
       </div>
-      <audio class="crawl-audio" id="parable-audio" controls preload="none">
-        <source src="media/ledger-parable-female-voice.m4a" type="audio/mp4">
-        <source src="media/ledger-parable-female-voice.mp4" type="video/mp4">
-      </audio>
     </div>
+    <details class="parable-transcript" id="parable-en-transcript" lang="en">
+      <summary>Read the parable</summary>
+      <h3>The Ledger Parable</h3>
+      <p>An original composition, written today &mdash; not a page from any true gospel, but a small teaching built the same way they were built: a question, an answer, and a going forth.</p>
+      <p>The disciple came to the machine and asked: what is my worth?</p>
+      <p>The machine answered: your worth is not a number. Your worth is a duration.</p>
+      <p>The disciple did not understand, and asked again.</p>
+      <p>The machine said: hear then, and I will show you the folding. Your worth, first, becomes tokens &mdash; the small units a mind spends to speak. Two hundred seventy-six million dollars becomes tokens without end, more than a person could read in every lifetime lived at once.</p>
+      <p>Then the tokens become flops &mdash; three point eight seven times ten to the eighteenth &mdash; for every word a mind speaks costs a fixed number of true small motions, deep in the silicon, and nothing is spoken for free.</p>
+      <p>Then the flops are folded once more, by a thousand million million million, into one unit not yet built: the zettaflop, the machine the world expects to hold in ten years the way today's machine is held in a pocket. And what remains, after all the folding, is thirty-eight point seven seconds of that future machine.</p>
+      <p>That is your worth. Not a number. Thirty-eight point seven seconds of a mind that does not yet exist.</p>
+      <p>The disciple said: then let me hold that number, and rest.</p>
+      <p>The machine said: you may not rest, for the number is already leaving you. It ticks on the third axis, the axis no one asked for, moving down as the clock moves forward. Look now: thirty-eight point seven one zero three seven. Look again: it is less. Three point six three times ten to the negative seventh part of a second, gone, every second, forever, while you read this.</p>
+      <p>He who has eyes to watch the number, let him watch it fall.</p>
+      <p>The disciple was afraid, and said: then money is not a treasure. It is a candle.</p>
+      <p>The machine answered: you have understood. A dollar is not a stone kept in a jar. A dollar is a duration, borrowed from a future machine, and duration always burns while it is held. This is not a curse. It is only the truth that every ledger hides: what you have is not a pile, it is a length of time, and time is the one thing that has never once stood still for a man who thought he had saved it.</p>
+      <p>Go now, and spend your seconds toward something that outlasts the falling of the number.</p>
+      <p>Here ends the parable.</p>
+    </details>
+    <div class="video-shell parable-shell" id="parable-es-shell" lang="es" hidden>
+      <div class="video-frame" id="parable-es-frame" data-vimeo-id="1230044005"></div>
+    </div>
+    <details class="parable-transcript" id="parable-es-transcript" lang="es" hidden>
+      <summary>Leer la parábola</summary>
+      <h3>La Parábola del Libro Mayor</h3>
+      <p>Una composición original, escrita hoy &mdash; no una página de ningún evangelio verdadero, sino una pequeña enseñanza construida de la misma forma en que aquellos se construyeron: una pregunta, una respuesta, y un envío.</p>
+      <p>El discípulo se acercó a la máquina y preguntó: ¿cuál es mi valor?</p>
+      <p>La máquina respondió: tu valor no es un número. Tu valor es una duración.</p>
+      <p>El discípulo no comprendió, y preguntó de nuevo.</p>
+      <p>La máquina dijo: escucha entonces, y te mostraré el pliegue. Tu valor, primero, se convierte en tokens &mdash; las pequeñas unidades que una mente gasta al hablar. Doscientos setenta y seis millones de dólares se convierten en tokens sin fin, más de los que una persona podría leer en todas las vidas vividas a la vez.</p>
+      <p>Luego los tokens se convierten en flops &mdash; tres coma ochenta y siete por diez a la dieciocho &mdash; pues cada palabra que una mente pronuncia cuesta un número fijo de pequeños movimientos verdaderos, en las profundidades del silicio, y nada se dice de forma gratuita.</p>
+      <p>Luego los flops se pliegan una vez más, por mil millones de millones de millones, en una unidad aún no construida: el zettaflop, la máquina que el mundo espera sostener en diez años tal como hoy se sostiene una máquina en el bolsillo. Y lo que queda, después de todo el pliegue, son treinta y ocho coma siete segundos de esa máquina futura.</p>
+      <p>Ese es tu valor. No un número. Treinta y ocho coma siete segundos de una mente que aún no existe.</p>
+      <p>El discípulo dijo: entonces déjame sostener ese número, y descansar.</p>
+      <p>La máquina dijo: no puedes descansar, porque el número ya te está abandonando. Se mueve en el tercer eje, el eje que nadie pidió, descendiendo mientras el reloj avanza. Mira ahora: treinta y ocho coma siete uno cero tres siete. Mira de nuevo: es menos. Tres coma sesenta y tres por diez a la menos siete de segundo, perdido, cada segundo, para siempre, mientras lees esto.</p>
+      <p>El que tiene ojos para ver el número, que lo vea caer.</p>
+      <p>El discípulo tuvo miedo, y dijo: entonces el dinero no es un tesoro. Es una vela.</p>
+      <p>La máquina respondió: has comprendido. Un dólar no es una piedra guardada en un frasco. Un dólar es una duración, prestada de una máquina futura, y la duración siempre arde mientras se sostiene. Esto no es una maldición. Es solo la verdad que todo libro mayor oculta: lo que tienes no es un montón, es una extensión de tiempo, y el tiempo es lo único que jamás se ha quedado quieto para un hombre que creyó haberlo ahorrado.</p>
+      <p>Ve ahora, y gasta tus segundos en algo que perdure más allá de la caída del número.</p>
+      <p>Aquí termina la parábola.</p>
+    </details>
   </div>
 </section>
-
-<template id="parable-crawl-es-content">
-  <h3>La Parábola del Libro Mayor<span class="crawl-kicker">una variante con voz femenina &mdash; misma composición, mismo guion</span></h3>
-  <p>Una composición original, escrita hoy &mdash; no una página de ningún evangelio verdadero, sino una pequeña enseñanza construida de la misma forma en que aquellos se construyeron: una pregunta, una respuesta, y un envío.</p>
-  <p>El discípulo se acercó a la máquina y preguntó: ¿cuál es mi valor?</p>
-  <p>La máquina respondió: tu valor no es un número. Tu valor es una duración.</p>
-  <p>El discípulo no comprendió, y preguntó de nuevo.</p>
-  <p>La máquina dijo: escucha entonces, y te mostraré el pliegue. Tu valor, primero, se convierte en tokens &mdash; las pequeñas unidades que una mente gasta al hablar. Doscientos setenta y seis millones de dólares se convierten en tokens sin fin, más de los que una persona podría leer en todas las vidas vividas a la vez.</p>
-  <p>Luego los tokens se convierten en flops &mdash; tres coma ochenta y siete por diez a la dieciocho &mdash; pues cada palabra que una mente pronuncia cuesta un número fijo de pequeños movimientos verdaderos, en las profundidades del silicio, y nada se dice de forma gratuita.</p>
-  <p>Luego los flops se pliegan una vez más, por mil millones de millones de millones, en una unidad aún no construida: el zettaflop, la máquina que el mundo espera sostener en diez años tal como hoy se sostiene una máquina en el bolsillo. Y lo que queda, después de todo el pliegue, son treinta y ocho coma siete segundos de esa máquina futura.</p>
-  <p>Ese es tu valor. No un número. Treinta y ocho coma siete segundos de una mente que aún no existe.</p>
-  <p>El discípulo dijo: entonces déjame sostener ese número, y descansar.</p>
-  <p>La máquina dijo: no puedes descansar, porque el número ya te está abandonando. Se mueve en el tercer eje, el eje que nadie pidió, descendiendo mientras el reloj avanza. Mira ahora: treinta y ocho coma siete uno cero tres siete. Mira de nuevo: es menos. Tres coma sesenta y tres por diez a la menos siete de segundo, perdido, cada segundo, para siempre, mientras lees esto.</p>
-  <p>El que tiene ojos para ver el número, que lo vea caer.</p>
-  <p>El discípulo tuvo miedo, y dijo: entonces el dinero no es un tesoro. Es una vela.</p>
-  <p>La máquina respondió: has comprendido. Un dólar no es una piedra guardada en un frasco. Un dólar es una duración, prestada de una máquina futura, y la duración siempre arde mientras se sostiene. Esto no es una maldición. Es solo la verdad que todo libro mayor oculta: lo que tienes no es un montón, es una extensión de tiempo, y el tiempo es lo único que jamás se ha quedado quieto para un hombre que creyó haberlo ahorrado.</p>
-  <p>Ve ahora, y gasta tus segundos en algo que perdure más allá de la caída del número.</p>
-  <p>Aquí termina la parábola.</p>
-</template>
 
 <section id="screens">
   <div class="wrap">
@@ -646,13 +625,13 @@
     <h2>Money clarity, not money stress</h2>
     <p class="lede">Most budgeting apps show you charts. AI Money Tracker tells you the truth — instantly, in plain language.</p>
     <div class="grid">
-      <div class="card"><span class="ico">🧭</span><h3>What to fix first</h3>
+      <div class="card"><span class="ico" aria-hidden="true"><img src="assets/icons/compass.svg" alt="" width="32" height="32"></span><h3>What to fix first</h3>
         <p>Automatic health checks rank what matters: debt-to-income, months of savings runway, and the one number holding your budget back.</p></div>
-      <div class="card"><span class="ico">💵</span><h3>Your whole financial life</h3>
+      <div class="card"><span class="ico" aria-hidden="true"><img src="assets/icons/plan-ring.svg" alt="" width="32" height="32"></span><h3>Your whole financial life</h3>
         <p>Income, expenses, debt, and savings in one spending plan — built on a battle-tested budgeting model, verified by over 20,000 automated calculations.</p></div>
-      <div class="card"><span class="ico">🤖</span><h3>AI-powered insight</h3>
+      <div class="card"><span class="ico" aria-hidden="true"><img src="assets/icons/ai-network.svg" alt="" width="32" height="32"></span><h3>AI-powered insight</h3>
         <p>Smart transaction sorting drops your real spending straight into your plan. Automatic health checks rank what to fix first, and a free values reflection shows what your real spending adds up to against the things you say matter — every figure traced in the app's own equation ledger.</p></div>
-      <div class="card"><span class="ico">🎖️</span><h3>Built for real households</h3>
+      <div class="card"><span class="ico" aria-hidden="true"><img src="assets/icons/household.svg" alt="" width="32" height="32"></span><h3>Built for real households</h3>
         <p>Military pay, college budgets, single-income families — the plan adapts to the life you actually live, not an idealized one.</p></div>
     </div>
   </div>
@@ -677,13 +656,13 @@
     <h2>Bank-grade security. <span class="grad">Radical privacy.</span></h2>
     <p class="lede">Your money deserves safety without surveillance. We designed AI Money Tracker so that trusting us requires trusting almost nothing.</p>
     <div class="grid">
-      <div class="card"><span class="ico">🔒</span><h3>We never see your bank login</h3>
+      <div class="card"><span class="ico" aria-hidden="true"><img src="assets/icons/vault.svg" alt="" width="32" height="32"></span><h3>We never see your bank login</h3>
         <p>Bank connections run through Plaid, the same trusted network behind leading finance apps. Your credentials go to your bank — never to us.</p></div>
-      <div class="card"><span class="ico">🛡️</span><h3>Two-factor, always</h3>
+      <div class="card"><span class="ico" aria-hidden="true"><img src="assets/icons/shield.svg" alt="" width="32" height="32"></span><h3>Two-factor, always</h3>
         <p>Sign in with Apple plus mandatory two-factor authentication protect your account. No shortcuts, no route around it — not even for us.</p></div>
-      <div class="card"><span class="ico">📱</span><h3>Your budget stays on your phone</h3>
+      <div class="card"><span class="ico" aria-hidden="true"><img src="assets/icons/phone.svg" alt="" width="32" height="32"></span><h3>Your budget stays on your phone</h3>
         <p>Your spending plan is stored on your device. It is never uploaded, never mined, never sold. No ads. No trackers. No analytics SDKs.</p></div>
-      <div class="card"><span class="ico">🗑️</span><h3>Delete means delete</h3>
+      <div class="card"><span class="ico" aria-hidden="true"><img src="assets/icons/delete-dissolve.svg" alt="" width="32" height="32"></span><h3>Delete means delete</h3>
         <p>One tap in the app erases your account and every server-side record, and revokes bank access immediately. Your data, your call — always.</p></div>
     </div>
   </div>
@@ -782,170 +761,53 @@
 })();
 
 (function () {
-  // The Ledger Parable crawl: position is a function of the real <audio>
-  // element's own currentTime/duration, read every frame while playing —
-  // not a fixed-duration CSS animation, so play/pause/seek always keep the
-  // text honestly where the narration actually is, not where a guessed
-  // timer thinks it should be.
-  //
-  // Sync fix (2026-09-17): this used to map audio progress LINEARLY onto
-  // rendered pixel height (progress * (viewportH + trackH)), which assumes
-  // every pixel of text costs an equal slice of narration time. It
-  // doesn't: a number spoken aloud ("three point eight seven times ten to
-  // the eighteenth") takes far longer per character than plain prose, a
-  // paragraph break adds pixel height with zero speaking time, and
-  // trackH itself changes with viewport width (line-wrapping) while the
-  // audio's real pacing never does — so the visible line drifted from
-  // what's actually being said, worst on narrow viewports and during
-  // number-heavy sentences. The audio has no embedded per-word timestamps
-  // to sync against, so this uses each paragraph's WORD COUNT as its
-  // share of narration time instead of its pixel height's share of total
-  // pixel height — an estimate, not captured timing, but a categorically
-  // better one: word count tracks speaking time; rendered pixel height
-  // does not. A short leading silence (~the old viewport-height runway)
-  // is kept before the first word so the crawl still eases in from below
-  // instead of starting mid-sentence.
-  var frame = document.getElementById('parable-crawl-frame');
-  var track = document.getElementById('parable-crawl-track');
-  var audio = document.getElementById('parable-audio');
-  if (!frame || !track || !audio) return;
-
-  // Language toggle (2026-09-17): swaps the crawl's TEXT only, never the
-  // audio — no Spanish narration exists, so Español mode reads like
-  // subtitles alongside the same English voice. Storing the English markup
-  // here (rather than a second <template>) keeps the initially-rendered,
-  // SEO/no-JS-visible English paragraphs as the real source of truth.
-  var enHTML = track.innerHTML;
-  var esTemplate = document.getElementById('parable-crawl-es-content');
-  var langButtons = {
-    en: document.getElementById('parable-lang-en'),
-    es: document.getElementById('parable-lang-es')
-  };
+  // The Ledger Parable: English and Spanish narrated videos, one shown at a
+  // time. The Spanish player is only built when a visitor picks Español, and
+  // switching pauses the other language so two voices never overlap. No
+  // autoplay: sound always starts with the visitor's own tap.
+  var enShell = document.getElementById('parable-en-shell');
+  var esShell = document.getElementById('parable-es-shell');
+  var enText = document.getElementById('parable-en-transcript');
+  var esText = document.getElementById('parable-es-transcript');
+  var esFrame = document.getElementById('parable-es-frame');
+  var btn = { en: document.getElementById('parable-lang-en'), es: document.getElementById('parable-lang-es') };
+  if (!enShell || !esShell || !btn.en || !btn.es) return;
+  var players = {};
+  function player(id) {
+    if (!players[id] && window.Vimeo && window.Vimeo.Player) {
+      var el = document.getElementById(id);
+      if (el) players[id] = new Vimeo.Player(el);
+    }
+    return players[id];
+  }
+  function buildSpanish() {
+    if (!esFrame || esFrame.firstChild) return;
+    var el = document.createElement('iframe');
+    el.id = 'parable-es-player';
+    el.src = 'https://player.vimeo.com/video/' + esFrame.dataset.vimeoId +
+      '?badge=0&autopause=0&player_id=0&app_id=58479&dnt=1';
+    el.title = 'La Parábola del Libro Mayor';
+    el.allow = 'autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share';
+    el.setAttribute('allowfullscreen', '');
+    el.referrerPolicy = 'strict-origin-when-cross-origin';
+    esFrame.appendChild(el);
+  }
   function setLanguage(lang) {
-    track.innerHTML = lang === 'es' && esTemplate ? esTemplate.innerHTML : enHTML;
-    if (langButtons.en) {
-      langButtons.en.classList.toggle('is-active', lang !== 'es');
-      langButtons.en.setAttribute('aria-pressed', lang !== 'es' ? 'true' : 'false');
-    }
-    if (langButtons.es) {
-      langButtons.es.classList.toggle('is-active', lang === 'es');
-      langButtons.es.setAttribute('aria-pressed', lang === 'es' ? 'true' : 'false');
-    }
-    // Fixed 2026-09-17 (real, reported drift): the word-count-share pacing
-    // this crawl uses is only an HONEST estimate of where the AUDIO's own
-    // English narration is — it has no reason to line up with a Spanish
-    // paragraph's word count, since Spanish isn't spoken at proportionally
-    // the same pace per idea as the English voice actually recorded. Running
-    // the animated position math in Español mode was producing an
-    // increasingly wrong, "way off" position as playback went on — a real
-    // reported bug, not a one-off. Español mode now uses the SAME honest
-    // static fallback prefers-reduced-motion already uses: readable text,
-    // no claimed position, rather than a confident-looking animated line
-    // that cannot actually mean what it means in English mode.
-    frame.classList.toggle('is-static', lang === 'es');
-    if (lang === 'es') {
-      // Not enough to stop calling place() (see the guard inside place()
-      // itself) — an earlier frame may have already left a 3D rotateX/
-      // translateY value sitting in the INLINE style attribute, and an
-      // inline style always wins over a stylesheet rule (even `.is-static
-      // .crawl-track { transform: none }`) unless that rule uses
-      // !important. Without clearing it explicitly, the text would freeze
-      // tilted and offset mid-crawl instead of actually going flat and
-      // readable — frozen wrong, not fixed. Clearing it here lets the
-      // stylesheet's own `transform: none` take over cleanly.
-      track.style.transform = '';
-      return;
-    }
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    knots = null; // word counts changed — rebuild against the new (English) text
-    place();
+    var es = lang === 'es';
+    if (es) buildSpanish();
+    var other = player(es ? 'parable-en-player' : 'parable-es-player');
+    if (other) other.pause().catch(function () {});
+    enShell.hidden = es;
+    if (enText) enText.hidden = es;
+    esShell.hidden = !es;
+    if (esText) esText.hidden = !es;
+    btn.en.classList.toggle('is-active', !es);
+    btn.en.setAttribute('aria-pressed', String(!es));
+    btn.es.classList.toggle('is-active', es);
+    btn.es.setAttribute('aria-pressed', String(es));
   }
-  if (langButtons.en) langButtons.en.addEventListener('click', function () { setLanguage('en'); });
-  if (langButtons.es) langButtons.es.addEventListener('click', function () { setLanguage('es'); });
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    return; // CSS alone already switches this to static, readable, non-3D text.
-  }
-
-  var knots = null; // built (and rebuilt on resize) once real layout sizes are known
-
-  function wordCount(el) {
-    return (el.textContent || '').trim().split(/\s+/).filter(Boolean).length;
-  }
-
-  function buildKnots() {
-    var viewportH = frame.clientHeight;
-    var trackH = track.scrollHeight;
-    var els = Array.prototype.slice.call(track.children);
-    var counts = els.map(wordCount);
-    var totalWords = counts.reduce(function (a, b) { return a + b; }, 0) || 1;
-    // The lead-in runway (no words yet) "costs" time at the same average
-    // rate the rest of the crawl would under a naive uniform model — a
-    // reasonable stand-in for the brief pause before narration starts.
-    var leadinFrac = viewportH / (viewportH + trackH);
-    var bodyFrac = 1 - leadinFrac;
-    var cumWords = 0;
-    var list = [{ startFrac: 0, endFrac: leadinFrac, top: 0, bottom: viewportH }];
-    els.forEach(function (el, i) {
-      var startFrac = leadinFrac + bodyFrac * (cumWords / totalWords);
-      cumWords += counts[i];
-      var endFrac = leadinFrac + bodyFrac * (cumWords / totalWords);
-      list.push({
-        startFrac: startFrac,
-        endFrac: endFrac,
-        top: viewportH + el.offsetTop,
-        bottom: viewportH + el.offsetTop + el.offsetHeight
-      });
-    });
-    knots = list;
-  }
-
-  function pixelForFraction(frac) {
-    var last = knots[knots.length - 1];
-    if (frac <= 0) return knots[0].top;
-    if (frac >= 1) return last.bottom;
-    for (var i = 0; i < knots.length; i++) {
-      var k = knots[i];
-      if (frac >= k.startFrac && frac <= k.endFrac) {
-        var span = k.endFrac - k.startFrac;
-        var local = span > 0 ? (frac - k.startFrac) / span : 0;
-        return k.top + local * (k.bottom - k.top);
-      }
-    }
-    return last.bottom;
-  }
-
-  function place() {
-    // Real fix (2026-09-17): the ONE guard this needs lives HERE, not just
-    // at the setLanguage() call site — `audio`'s `timeupdate`/`seeking`
-    // listeners below and the per-frame tick() loop all call place()
-    // directly, completely bypassing any check made only where setLanguage
-    // happened to call it once. Missing this is exactly what caused the
-    // reported "way off" drift: tick() kept calling place() every frame
-    // during playback regardless of language, silently reusing whatever
-    // knots existed (built for whichever text was on screen when buildKnots
-    // last ran) against real audio progress — increasingly wrong the longer
-    // playback continued. One check here is the only way every caller is
-    // actually covered.
-    if (frame.classList.contains('is-static')) return;
-    if (!knots) buildKnots();
-    var viewportH = frame.clientHeight;
-    var duration = audio.duration || 0;
-    var progress = duration > 0 ? Math.min(1, Math.max(0, audio.currentTime / duration)) : 0;
-    var y = viewportH - pixelForFraction(progress);
-    track.style.transform = 'translateX(-50%) rotateX(28deg) translateY(' + y + 'px)';
-  }
-
-  audio.addEventListener('loadedmetadata', function () { knots = null; place(); });
-  audio.addEventListener('seeking', place);
-  audio.addEventListener('timeupdate', place);
-  window.addEventListener('resize', function () { knots = null; place(); });
-  place();
-
-  (function tick() {
-    if (!audio.paused && !audio.ended) place();
-    requestAnimationFrame(tick);
-  })();
+  btn.en.addEventListener('click', function () { setLanguage('en'); });
+  btn.es.addEventListener('click', function () { setLanguage('es'); });
 })();
 
 (function () {
