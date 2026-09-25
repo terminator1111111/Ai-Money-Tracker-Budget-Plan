@@ -269,7 +269,6 @@
     animation: diorama-float 6s ease-in-out infinite;
   }
   @keyframes diorama-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -10px; } }
-  .diorama-chip-badge img { width: 40px; height: 40px; border-radius: 10px; }
   .diorama-chip .glyph { width: 42px; height: 42px; }
   /* Each chip's own position in the stage (translateX/Y set the 2D axis,
      --z sets depth) plus a lighter, larger, blurrier shadow the further
@@ -278,7 +277,6 @@
   .diorama-chip.c2 { left: 74%; top: 4%;  transform: translateZ(20px)  rotateY(-14deg); animation-delay: .6s; color: var(--neon-cyan); filter: blur(.3px); }
   .diorama-chip.c3 { left: 80%; top: 58%; transform: translateZ(-40px) rotateY(-18deg); animation-delay: 1.3s; color: var(--neon-violet); filter: blur(.6px); opacity: .92; }
   .diorama-chip.c4 { left: 2%;  top: 60%; transform: translateZ(-20px) rotateY(16deg); animation-delay: 2s;   color: var(--neon-pink); filter: blur(.4px); }
-  .diorama-chip.c5 { left: 40%; top: 84%; transform: translateZ(90px)  rotateY(0deg); animation-delay: 2.6s; color: var(--neon-green); }
   .diorama-caption { text-align: center; margin-top: 18px; color: var(--dim); font-size: .85rem; }
   @media (max-width: 640px) {
     .diorama-stage { height: 340px; }
@@ -512,7 +510,6 @@
         <div class="diorama-chip c2" role="img" aria-label="Instant health checks"><img class="glyph" src="assets/icons/health-gauge.svg" alt="" width="42" height="42"></div>
         <div class="diorama-chip c3" role="img" aria-label="Banks, connected"><img class="glyph" src="assets/icons/bank.svg" alt="" width="42" height="42"></div>
         <div class="diorama-chip c4" role="img" aria-label="Bank-grade security"><img class="glyph" src="assets/icons/vault.svg" alt="" width="42" height="42"></div>
-        <div class="diorama-chip c5 diorama-chip-badge" role="img" aria-label="Made in the U.S.A."><img src="assets/made-in-usa.png" alt="" width="40" height="40"></div>
         <figure class="diorama-hero">
           <img src="screenshots/plan.png" alt="AI Money Tracker's Plan screen, the center of the app" loading="lazy">
         </figure>
