@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.ai-money-tracker.com" }],
+      "destination": "https://ai-money-tracker.com/:path*",
+      "permanent": true
+    }
+  ]
+}
