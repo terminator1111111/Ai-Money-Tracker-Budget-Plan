@@ -172,9 +172,17 @@
     .cta.ghost { background: #101827; background-image: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
   }
   .note { margin-top: 16px; font-size: .85rem; color: var(--dim); }
+  .usa-badge-wrap {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    margin: 26px auto 0;
+  }
   .usa-badge {
-    display: block; width: 92px; height: 92px; margin: 26px auto 0;
+    display: block; width: 92px; height: 92px;
     filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.12));
+  }
+  .usa-badge-label {
+    font-size: .72rem; font-weight: 800; letter-spacing: .08em;
+    color: #cfd2e6;
   }
 
   section { padding: 64px 0; position: relative; scroll-margin-top: 70px; }
@@ -497,7 +505,10 @@
     <a class="cta ghost" href="/privacy">Read our Privacy Promise</a>
   </div>
   <p class="note">Exclusively on iPhone — not available on Android · Free for seven days · Built for military families, students, and every household in between</p>
-  <img class="usa-badge" src="assets/made-in-usa.svg" alt="Made in U.S.A. — designed, built, and supported in the United States" width="92" height="92">
+  <div class="usa-badge-wrap">
+    <img class="usa-badge" src="assets/made-in-usa.svg" alt="" width="92" height="92">
+    <span class="usa-badge-label">Made in the USA</span>
+  </div>
 </header>
 
 <section id="scene" class="diorama-wrap">
