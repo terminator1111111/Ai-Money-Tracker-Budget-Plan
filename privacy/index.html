@@ -4,7 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://ai-money-tracker.com/privacy">
+<link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/privacy">
+<link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/privacy">
+<link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/privacy">
 <title>Privacy Policy — AI Money Tracker Pro</title>
+<meta name="description" content="AI Money Tracker Pro's privacy policy: what information the app collects, how it is used and shared, how it is protected and retained, and your rights and choices.">
+<script src="/assets/lang-splash.js" defer></script>
 <style>
   body {
     font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
@@ -67,11 +72,38 @@
     border-top: 1px solid #e2e2e2;
     padding-top: 16px;
   }
+  /* Back link and the English <-> Español link share one row. */
+  .page-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .lang-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 4px 14px;
+    flex: none;
+    border: 1px solid #c9d1da;
+    border-radius: 999px;
+    color: #185fa5;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .lang-link::after { content: ""; position: absolute; inset: -6px -4px; }
+  .lang-link:hover { border-color: #185fa5; }
 </style>
 </head>
 <body>
 
-<a href="/#video" id="back-to-video" style="display:inline-block;margin-bottom:24px;font-size:14px;color:#0D7C6D;text-decoration:none;">&larr; Back to the video</a>
+<div class="page-top" data-nosnippet>
+  <a href="/#video" id="back-to-video" style="display:inline-block;font-size:14px;color:#0D7C6D;text-decoration:none;">&larr; Back to the video</a>
+  <a class="lang-link" href="/es/privacy" hreflang="es" lang="es" data-lang-link="es">Español</a>
+</div>
 
 <h1>Privacy Policy</h1>
 <p class="meta">AI Money Tracker Pro &nbsp;•&nbsp; Version 1.1 &nbsp;•&nbsp; Effective Date: September 20, 2026</p>
@@ -144,6 +176,7 @@
 
 <footer>
   &copy; 2026 AI Money Tracker Pro. All rights reserved.
+  <div style="margin-top:8px" data-nosnippet>Language: English · <a href="/es/privacy" hreflang="es" lang="es" data-lang-link="es">Español</a></div>
 </footer>
 
 </body>

@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!-- Each page lists every language version, itself included, plus x-default
+     (Google Search Central, "Tell Google about localized versions of your
+     page"). These must match the <link rel="alternate" hreflang> tags in
+     each page's <head>. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ai-money-tracker.com/</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/"/>
+  </url>
+  <url>
+    <loc>https://ai-money-tracker.com/es</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/"/>
   </url>
   <url>
     <loc>https://ai-money-tracker.com/calculator</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/calculator"/>
+  </url>
+  <url>
+    <loc>https://ai-money-tracker.com/es/calculator</loc>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/calculator"/>
   </url>
   <url>
     <loc>https://ai-money-tracker.com/privacy</loc>
-    <lastmod>2026-09-29</lastmod>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/privacy"/>
+  </url>
+  <url>
+    <loc>https://ai-money-tracker.com/es/privacy</loc>
+    <lastmod>2026-09-30</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/privacy"/>
   </url>
 </urlset>
