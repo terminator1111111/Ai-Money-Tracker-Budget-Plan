@@ -6,45 +6,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ai-money-tracker.com/</loc>
-    <lastmod>2026-09-30</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/"/>
-  </url>
-  <url>
-    <loc>https://ai-money-tracker.com/es</loc>
-    <lastmod>2026-09-30</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/"/>
-  </url>
-  <url>
-    <loc>https://ai-money-tracker.com/calculator</loc>
+    <loc>https://simoneytracker.com/</loc>
     <lastmod>2026-10-01</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/calculator"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/calculator"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/calculator"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simoneytracker.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://simoneytracker.com/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simoneytracker.com/"/>
   </url>
   <url>
-    <loc>https://ai-money-tracker.com/es/calculator</loc>
+    <loc>https://simoneytracker.com/es</loc>
     <lastmod>2026-10-01</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/calculator"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/calculator"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/calculator"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simoneytracker.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://simoneytracker.com/es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simoneytracker.com/"/>
   </url>
   <url>
-    <loc>https://ai-money-tracker.com/privacy</loc>
-    <lastmod>2026-09-30</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/privacy"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/privacy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/privacy"/>
+    <loc>https://simoneytracker.com/calculator</loc>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simoneytracker.com/calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://simoneytracker.com/es/calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simoneytracker.com/calculator"/>
   </url>
   <url>
-    <loc>https://ai-money-tracker.com/es/privacy</loc>
-    <lastmod>2026-09-30</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ai-money-tracker.com/privacy"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://ai-money-tracker.com/es/privacy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ai-money-tracker.com/privacy"/>
+    <loc>https://simoneytracker.com/es/calculator</loc>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simoneytracker.com/calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://simoneytracker.com/es/calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simoneytracker.com/calculator"/>
+  </url>
+  <url>
+    <loc>https://simoneytracker.com/privacy</loc>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simoneytracker.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://simoneytracker.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simoneytracker.com/privacy"/>
+  </url>
+  <url>
+    <loc>https://simoneytracker.com/es/privacy</loc>
+    <lastmod>2026-10-01</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simoneytracker.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://simoneytracker.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simoneytracker.com/privacy"/>
   </url>
 </urlset>

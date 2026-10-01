@@ -1,4 +1,4 @@
-/* AI Money Tracker Pro: English / Espanol language choice.
+/* SI Money Tracker: English / Espanol language choice.
  *
  * Progressive enhancement only. Every page already carries plain
  * <a hreflang> links to its other-language twin; they work with JavaScript

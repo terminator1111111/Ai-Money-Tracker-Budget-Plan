@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ai-money-tracker.com/sitemap.xml
+Sitemap: https://simoneytracker.com/sitemap.xml
