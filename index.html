@@ -440,6 +440,13 @@
   .parable-transcript summary { cursor: pointer; text-align: center; }
   .parable-transcript h3 { font-size: 1rem; margin: 16px 0 12px; }
   .parable-transcript p { line-height: 1.7; margin: 0 0 14px; }
+  /* Ledger Parable notes (owner 2026-10-02): the derivation behind the figures and the date stamp. */
+  .parable-notes { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line, rgba(238,244,255,.14)); font-size: .9rem; }
+  .parable-notes h4 { font-size: .95rem; margin: 0 0 10px; color: var(--ink); }
+  .parable-notes ul { margin: 0 0 14px 1.2em; padding: 0; line-height: 1.6; }
+  .parable-notes li { margin: 0 0 6px; }
+  .parable-transcript sup { font-size: .7em; line-height: 0; }
+  .parable-video-note { font-style: italic; }
 
   /* pricing */
   .price-card {
@@ -596,21 +603,42 @@
     <details class="parable-transcript" id="parable-en-transcript" lang="en">
       <summary>Read the parable</summary>
       <h3>The Ledger Parable</h3>
-      <p>An original composition, written today &mdash; not a page from any true gospel, but a small teaching built the same way they were built: a question, an answer, and a going forth.</p>
+      <p>An original composition, written today<sup>**</sup> &mdash; not a page from any true gospel, but a small teaching built the same way they were built: a question, an answer, and a going forth.</p>
       <p>The disciple came to the machine and asked: what is my worth?</p>
       <p>The machine answered: your worth is not a number. Your worth is a duration.</p>
       <p>The disciple did not understand, and asked again.</p>
-      <p>The machine said: hear then, and I will show you the folding. Your worth, first, becomes tokens &mdash; the small units a mind spends to speak. Two hundred seventy-six million dollars becomes tokens without end, more than a person could read in every lifetime lived at once.</p>
-      <p>Then the tokens become flops &mdash; three point eight seven times ten to the eighteenth &mdash; for every word a mind speaks costs a fixed number of true small motions, deep in the silicon, and nothing is spoken for free.</p>
-      <p>Then the flops are folded once more, by a thousand million million million, into one unit not yet built: the zettaflop, the machine the world expects to hold in ten years the way today's machine is held in a pocket. And what remains, after all the folding, is thirty-eight point seven seconds of that future machine.</p>
+      <p>The machine said: hear then, and I will show you the folding. Your worth, first, becomes tokens &mdash; the small units a mind spends to speak. Five hundred six thousand dollars becomes two hundred seventy-six billion tokens<sup>*</sup>, more than a person could read in a lifetime.</p>
+      <p>Then the tokens become flops &mdash; three point eight seven times ten to the twenty-second<sup>*</sup> &mdash; for every word a mind speaks costs a fixed number of true small motions, deep in the silicon, and nothing is spoken for free.</p>
+      <p>Then the flops are folded once more, by a thousand million million million, into one unit not yet built: the zettaflop, the machine the world expects to hold in ten years<sup>**</sup> the way today's machine is held in a pocket. And what remains, after all the folding, is thirty-eight point seven seconds<sup>*</sup> of that future machine.</p>
       <p>That is your worth. Not a number. Thirty-eight point seven seconds of a mind that does not yet exist.</p>
       <p>The disciple said: then let me hold that number, and rest.</p>
-      <p>The machine said: you may not rest, for the number is already leaving you. It ticks on the third axis, the axis no one asked for, moving down as the clock moves forward. Look now: thirty-eight point seven one zero three seven. Look again: it is less. Three point six three times ten to the negative seventh part of a second, gone, every second, forever, while you read this.</p>
+      <p>The machine said: you may not rest, for the number is already leaving you. It ticks on the third axis, the axis no one asked for, moving down as the clock moves forward. Look now: thirty-eight point seven one zero three seven<sup>***</sup>. Look again: it is less. Three point six three times ten to the negative eighth<sup>***</sup> part of a second, gone, every second, forever, while you read this.</p>
       <p>He who has eyes to watch the number, let him watch it fall.</p>
       <p>The disciple was afraid, and said: then money is not a treasure. It is a candle.</p>
       <p>The machine answered: you have understood. A dollar is not a stone kept in a jar. A dollar is a duration, borrowed from a future machine, and duration always burns while it is held. This is not a curse. It is only the truth that every ledger hides: what you have is not a pile, it is a length of time, and time is the one thing that has never once stood still for a man who thought he had saved it.</p>
       <p>Go now, and spend your seconds toward something that outlasts the falling of the number.</p>
       <p>Here ends the parable.</p>
+      <div class="parable-notes">
+        <h4>Notes</h4>
+        <p><sup>*</sup> How the 38.7 seconds was worked out. These are the figures from the app's own &ldquo;Show the math&rdquo; panel on September 15, 2026, for an example net worth of $506,000.00 at the app's token prices of September 13, 2026:</p>
+        <ul>
+          <li>$506,000.00 ÷ $1.83 per million tokens = 276,502,732,240 tokens (rounded down)</li>
+          <li>276,502,732,240 tokens × 1.4 × 10¹¹ FLOP per token = 3.871 × 10²² FLOP</li>
+          <li>3.871 × 10²² FLOP ÷ 10²¹ FLOP per second (one zettaflop) = 38.71 seconds of a zettaflop machine</li>
+        </ul>
+        <p>Where the two rates come from:</p>
+        <ul>
+          <li>$1.83 per million tokens is the average of three approximate prices ($5.00, $0.40 and $0.10 per million tokens): $1.8333…, rounded to the cent.</li>
+          <li>1.4 × 10¹¹ FLOP per token is two operations per parameter of a 70-billion-parameter model.</li>
+        </ul>
+        <p><sup>**</sup> Time stamp: September 13, 2026, the date the app's prices were set. The parable was written two days later, on September 15, 2026. &ldquo;In ten years&rdquo; counts from then, so it means about 2036. That is the parable's image, not a forecast: the app's compute screen dates the first zettaflop-class machines to 2030&ndash;2033, a 2025 median estimate.</p>
+        <p><sup>***</sup> &ldquo;Thirty-eight point seven one zero three seven&rdquo; is the panel's live reading on September 15, 2026, taken 263 seconds after the panel was opened, with token prices assumed to rise 3% a year:</p>
+        <ul>
+          <li>38.71038 ÷ 1.03^(263 ÷ 31,556,952) = 38.71037 seconds of a zettaflop machine.</li>
+          <li>At that moment it was falling by 3.63 × 10⁻⁸ per second (ln 1.03 per year × 38.71037 ÷ 31,556,952 seconds per year).</li>
+        </ul>
+        <p class="parable-video-note">The narrated videos were recorded before these corrections; the text and notes above are the corrected version.</p>
+      </div>
     </details>
     <!-- data-vimeo-defer: Vimeo's player.js otherwise turns every data-vimeo-id
          element into an embed as soon as it loads (github.com/vimeo/player.js,
@@ -623,21 +651,42 @@
     <details class="parable-transcript" id="parable-es-transcript" lang="es" hidden>
       <summary>Leer la parábola</summary>
       <h3>La Parábola del Libro Mayor</h3>
-      <p>Una composición original, escrita hoy &mdash; no una página de ningún evangelio verdadero, sino una pequeña enseñanza construida de la misma forma en que aquellos se construyeron: una pregunta, una respuesta, y un envío.</p>
+      <p>Una composición original, escrita hoy<sup>**</sup> &mdash; no una página de ningún evangelio verdadero, sino una pequeña enseñanza construida de la misma forma en que aquellos se construyeron: una pregunta, una respuesta, y un envío.</p>
       <p>El discípulo se acercó a la máquina y preguntó: ¿cuál es mi valor?</p>
       <p>La máquina respondió: tu valor no es un número. Tu valor es una duración.</p>
       <p>El discípulo no comprendió, y preguntó de nuevo.</p>
-      <p>La máquina dijo: escucha entonces, y te mostraré el pliegue. Tu valor, primero, se convierte en tokens &mdash; las pequeñas unidades que una mente gasta al hablar. Doscientos setenta y seis millones de dólares se convierten en tokens sin fin, más de los que una persona podría leer en todas las vidas vividas a la vez.</p>
-      <p>Luego los tokens se convierten en flops &mdash; tres coma ochenta y siete por diez a la dieciocho &mdash; pues cada palabra que una mente pronuncia cuesta un número fijo de pequeños movimientos verdaderos, en las profundidades del silicio, y nada se dice de forma gratuita.</p>
-      <p>Luego los flops se pliegan una vez más, por mil millones de millones de millones, en una unidad aún no construida: el zettaflop, la máquina que el mundo espera sostener en diez años tal como hoy se sostiene una máquina en el bolsillo. Y lo que queda, después de todo el pliegue, son treinta y ocho coma siete segundos de esa máquina futura.</p>
+      <p>La máquina dijo: escucha entonces, y te mostraré el pliegue. Tu valor, primero, se convierte en tokens &mdash; las pequeñas unidades que una mente gasta al hablar. Quinientos seis mil dólares se convierten en doscientos setenta y seis mil millones de tokens<sup>*</sup>, más de los que una persona podría leer en toda una vida.</p>
+      <p>Luego los tokens se convierten en flops &mdash; tres coma ochenta y siete por diez a la veintidós<sup>*</sup> &mdash; pues cada palabra que una mente pronuncia cuesta un número fijo de pequeños movimientos verdaderos, en las profundidades del silicio, y nada se dice de forma gratuita.</p>
+      <p>Luego los flops se pliegan una vez más, por mil millones de millones de millones, en una unidad aún no construida: el zettaflop, la máquina que el mundo espera sostener en diez años<sup>**</sup> tal como hoy se sostiene una máquina en el bolsillo. Y lo que queda, después de todo el pliegue, son treinta y ocho coma siete segundos<sup>*</sup> de esa máquina futura.</p>
       <p>Ese es tu valor. No un número. Treinta y ocho coma siete segundos de una mente que aún no existe.</p>
       <p>El discípulo dijo: entonces déjame sostener ese número, y descansar.</p>
-      <p>La máquina dijo: no puedes descansar, porque el número ya te está abandonando. Se mueve en el tercer eje, el eje que nadie pidió, descendiendo mientras el reloj avanza. Mira ahora: treinta y ocho coma siete uno cero tres siete. Mira de nuevo: es menos. Tres coma sesenta y tres por diez a la menos siete de segundo, perdido, cada segundo, para siempre, mientras lees esto.</p>
+      <p>La máquina dijo: no puedes descansar, porque el número ya te está abandonando. Se mueve en el tercer eje, el eje que nadie pidió, descendiendo mientras el reloj avanza. Mira ahora: treinta y ocho coma siete uno cero tres siete<sup>***</sup>. Mira de nuevo: es menos. Tres coma sesenta y tres por diez a la menos ocho<sup>***</sup> de segundo, perdido, cada segundo, para siempre, mientras lees esto.</p>
       <p>El que tiene ojos para ver el número, que lo vea caer.</p>
       <p>El discípulo tuvo miedo, y dijo: entonces el dinero no es un tesoro. Es una vela.</p>
       <p>La máquina respondió: has comprendido. Un dólar no es una piedra guardada en un frasco. Un dólar es una duración, prestada de una máquina futura, y la duración siempre arde mientras se sostiene. Esto no es una maldición. Es solo la verdad que todo libro mayor oculta: lo que tienes no es un montón, es una extensión de tiempo, y el tiempo es lo único que jamás se ha quedado quieto para un hombre que creyó haberlo ahorrado.</p>
       <p>Ve ahora, y gasta tus segundos en algo que perdure más allá de la caída del número.</p>
       <p>Aquí termina la parábola.</p>
+      <div class="parable-notes">
+        <h4>Notas</h4>
+        <p><sup>*</sup> Cómo se obtuvieron los 38,7 segundos. Son las cifras del propio panel «Mostrar el cálculo» de la app del 15 de septiembre de 2026, para un patrimonio neto de ejemplo de 506.000,00 US$ con los precios de tokens de la app del 13 de septiembre de 2026:</p>
+        <ul>
+          <li>506.000,00 US$ ÷ 1,83 US$ por millón de tokens = 276.502.732.240 tokens (redondeado hacia abajo)</li>
+          <li>276.502.732.240 tokens × 1,4 × 10¹¹ FLOP por token = 3,871 × 10²² FLOP</li>
+          <li>3,871 × 10²² FLOP ÷ 10²¹ FLOP por segundo (un zettaflop) = 38,71 segundos de una máquina zettaflop</li>
+        </ul>
+        <p>De dónde salen las dos tasas:</p>
+        <ul>
+          <li>1,83 US$ por millón de tokens es el promedio de tres precios aproximados (5,00 US$, 0,40 US$ y 0,10 US$ por millón de tokens): 1,8333… US$, redondeado al centavo.</li>
+          <li>1,4 × 10¹¹ FLOP por token son dos operaciones por parámetro de un modelo de 70.000 millones de parámetros.</li>
+        </ul>
+        <p><sup>**</sup> Fecha de referencia: 13 de septiembre de 2026, la fecha en que se fijaron los precios de la app. La parábola se escribió dos días después, el 15 de septiembre de 2026. «En diez años» se cuenta desde entonces, así que significa hacia 2036. Es una imagen de la parábola, no un pronóstico: la pantalla de cómputo de la app sitúa las primeras máquinas de clase zettaflop en 2030&ndash;2033, según una estimación mediana de 2025.</p>
+        <p><sup>***</sup> «Treinta y ocho coma siete uno cero tres siete» es la lectura en vivo del panel el 15 de septiembre de 2026, tomada 263 segundos después de abrirlo, suponiendo que los precios de los tokens suben un 3 % al año:</p>
+        <ul>
+          <li>38,71038 ÷ 1,03^(263 ÷ 31.556.952) = 38,71037 segundos de una máquina zettaflop.</li>
+          <li>En ese momento bajaba 3,63 × 10⁻⁸ por segundo (ln 1,03 por año × 38,71037 ÷ 31.556.952 segundos por año).</li>
+        </ul>
+        <p class="parable-video-note">Los videos narrados se grabaron antes de estas correcciones; el texto y las notas de arriba son la versión corregida.</p>
+      </div>
     </details>
   </div>
 </section>
